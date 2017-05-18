@@ -7,17 +7,19 @@ using UnityEngine.UI;
 
 public class ClickManager : MonoBehaviour, IPointerClickHandler
 {
-    public Text clicks;
+    public Text clicksText;
     public Slider experience;
 
-    public float Count { get; set; }
+    public static float Count { get; set; }
     public int Level { get; set; }
-
     private static readonly float EXP = 150;
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        clicks.text = string.Format("Clicks: {0}\nLevel: {1}", ++Count, Level);
+        if (!ZoomSystem.isClick)
+            return;
+
+        clicksText.text = string.Format("Clicks: {0}\nLevel: {1}", ++Count, Level);
 
         experience.maxValue = GetExp(Level);
         experience.value = Count;
@@ -34,9 +36,14 @@ public class ClickManager : MonoBehaviour, IPointerClickHandler
         Level = 1;
     }
 
-    private void Update()
+    private void Start()
     {
+        MuscleSystem.ChangeText += MuscleSystem_ChangeText;
+    }
 
+    private void MuscleSystem_ChangeText()
+    {
+        clicksText.text = string.Format("Clicks: {0}\nLevel: {1}", MuscleSystem.ZoomableGO.GetComponent<MuscleSystem>().Clicks, Level);
     }
 
     private static float GetExp(float level)
