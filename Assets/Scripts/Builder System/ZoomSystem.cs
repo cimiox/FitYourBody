@@ -9,6 +9,6 @@ public class ZoomSystem : MonoBehaviour
     {
         Camera.main.orthographicSize = (go.GetComponent<Renderer>().bounds.size.x / Camera.main.aspect) / 3;
         Camera.main.transform.position = new Vector3(go.transform.position.x, go.transform.position.x, -10);
-        //
+        //changes
     }
 }
