@@ -1,0 +1,30 @@
+[
+  {
+    "ID": 1,
+    "Name": "Protein",
+    "Image": "protein.jpg",
+    "Multiplier": 1.1,
+    "Cost": 100
+  },
+  {
+    "ID": 2,
+    "Name": "Geiner",
+    "Image": "geiner.jpg",
+    "Multiplier": 1.2,
+    "Cost": 120
+  },
+  {
+    "ID": 3,
+    "Name": "Protein[2]",
+    "Image": "protein[2].jpg",
+    "Multiplier": 1.3,
+    "Cost": 140
+  },
+  {
+    "ID": 4,
+    "Name": "Geiner[2]",
+    "Image": "geiner[2].jpg",
+    "Multiplier": 1.4,
+    "Cost": 160
+  }
+]

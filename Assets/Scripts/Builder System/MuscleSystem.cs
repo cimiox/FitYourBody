@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ public class MuscleSystem : MonoBehaviour
     public static event ChangingText ChangeText;
 
     public static GameObject ZoomableGO { get; set; }
+    public static float Multiplier { get; set; }
 
     private int clicks;
     public int Clicks
@@ -19,24 +21,23 @@ public class MuscleSystem : MonoBehaviour
             ChangeText();
         }
     }
-    public float Multiplier { get; set; }
     public bool isZoom { get; set; }
 
     private void OnMouseDown()
     {
         if (!isZoom)
         {
-            ZoomSystem.Zoom(gameObject);
-            isZoom = true;
             Init();
             return;
         }
-        
-        Clicks += 1;
+
+        Clicks += Convert.ToInt32(1 * Multiplier);
     }
 
     private void Init()
     {
-        ZoomableGO = gameObject;
+        ZoomSystem.Zoom(ZoomableGO = gameObject);
+        isZoom = true;
+        Multiplier = 1;
     }
 }
