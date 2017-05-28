@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,6 +10,7 @@ public class Cell : MonoBehaviour
     public Image Sprite { get; set; }
     public Text Description { get; set; }
     public Button BuyBtn { get; set; }
+    public Item Properties { get; set; }
 
     private void Awake()
     {
@@ -16,5 +18,11 @@ public class Cell : MonoBehaviour
         Sprite = gameObject.transform.GetChild(1).GetComponent<Image>();
         Description = gameObject.transform.GetChild(2).GetComponent<Text>();
         BuyBtn = gameObject.transform.GetChild(3).GetComponent<Button>();
+    }
+
+    public void Buy()
+    {
+        if (ClickManager.Money > Properties.Cost)
+            ClickManager.Money -= Convert.ToInt32(Properties.Cost);
     }
 }

@@ -4,38 +4,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Inventory : MonoBehaviour
+public abstract class Inventory : MonoBehaviour
 {
-    private static Inventory Instance = null;
-
-    public static TextAsset ItemsDB { get; set; }
-    public static List<Item> Items { get; set; }
-    public static GameObject CellPrefab { get; set; }
-
-    private void Start()
+    private GameObject cellPrefab;
+    public GameObject CellPrefab
     {
-        if (Instance == null)
-            Instance = this;
-        else
-            DestroyObject(this);
-
-        Init();
+        get
+        {
+            if (cellPrefab == null)
+                return cellPrefab = Resources.Load<GameObject>("Shop/Cell");
+            return cellPrefab;
+        }
+        private set { cellPrefab = value; }
     }
 
-
-    public static void Init()
+    protected void Init(List<Item> items, GameObject prefab, Transform thisGO)
     {
-        ItemsDB = Resources.Load<TextAsset>("Shop/itemsDB");
-        Items = JsonConvert.DeserializeObject<List<Item>>(ItemsDB.text);
-        CellPrefab = Resources.Load<GameObject>("Shop/Cell");
-
-        for (int i = 0; i < Items.Count; i++)
+        for (int i = 0; i < items.Count; i++)
         {
-            GameObject cell = Instantiate(CellPrefab, Instance.transform);
-            cell.GetComponent<Cell>().Name.text = Items[i].Name;
-            cell.GetComponent<Cell>().Sprite.sprite = Items[i].Sprite;
-            cell.GetComponent<Cell>().Description.text = Items[i].Multiplier.ToString();
-            cell.GetComponent<Cell>().BuyBtn.GetComponentInChildren<Text>().text = string.Format("Buy({0})", Items[i].Cost);
+            GameObject cell = Instantiate(prefab, thisGO);
+            var cellComponent = cell.GetComponent<Cell>();
+            cellComponent.Name.text = items[i].Name;
+            cellComponent.Sprite.sprite = items[i].Sprite;
+            cellComponent.Description.text = items[i].Multiplier.ToString();
+            cellComponent.BuyBtn.GetComponentInChildren<Text>().text = string.Format("Buy({0})", items[i].Cost);
+            cellComponent.Properties = items[i];
         }
     }
 }

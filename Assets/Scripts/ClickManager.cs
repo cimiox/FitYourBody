@@ -11,6 +11,7 @@ public class ClickManager : MonoBehaviour, IPointerClickHandler
     public Slider experience;
 
     public static int Level { get; set; }
+    public static int Money { get; set; }
     private static readonly float EXP = 150;
 
     public void OnPointerClick(PointerEventData eventData)
