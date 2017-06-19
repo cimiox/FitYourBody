@@ -11,7 +11,7 @@ public class ZoomSystem : MonoBehaviour
 
     public static void Zoom(GameObject go)
     {
-        Camera.main.orthographicSize = (go.GetComponent<Renderer>().bounds.size.x / Camera.main.aspect) / 12;
+        Camera.main.orthographicSize = (go.GetComponent<Renderer>().bounds.size.x / Camera.main.aspect) / 1.1f;
         Camera.main.transform.position = new Vector3(go.transform.position.x, go.transform.position.y, 0);
         isClick = true;
     }

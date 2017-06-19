@@ -54,7 +54,12 @@ public class ClickManager : MonoBehaviour, IPointerClickHandler
     private static int AllClicks(GameObject parentGO)
     {
         int sum = 0;
-        foreach (var item in parentGO.GetComponentsInChildren<MuscleSystem>())
+        var childrensWithComponent = parentGO.GetComponentsInChildren<MuscleSystem>();
+
+        if(childrensWithComponent == null)
+            return 0;
+
+        foreach (var item in childrensWithComponent)
         {
             sum += item.Clicks;
         }
@@ -64,7 +69,7 @@ public class ClickManager : MonoBehaviour, IPointerClickHandler
 
     public void BackToPlayer()
     {
-        clicksText.text = string.Format("All Clicks: {0}\nLevel: {1}", AllClicks(GameObject.Find("Img")), Level);
+        clicksText.text = string.Format("All Clicks: {0}\nLevel: {1}", AllClicks(GameObject.Find("Player")), Level);
 
         ZoomSystem.Detach();
 
