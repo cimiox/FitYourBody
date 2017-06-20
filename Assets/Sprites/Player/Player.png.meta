@@ -1,0 +1,468 @@
+fileFormatVersion: 2
+guid: 7d4f259b06e79bb419d79377074b2995
+timeCreated: 1497981006
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Press_S
+    21300002: Chest_S
+    21300004: Press
+    21300006: Chest
+    21300008: RigthHand_Front_S
+    21300010: RigthHand_Back_S
+    21300012: LeftLeg_Back_S
+    21300014: LeftLeg_Back
+    21300016: Head_S
+    21300018: Head
+    21300020: "\u043C\u0443\u0441\u043A\u0443\u043B\u044B0003_10"
+    21300022: Back_S
+    21300024: RigthHand_Front
+    21300026: RigthHand_Back
+    21300028: "\u043C\u0443\u0441\u043A\u0443\u043B\u044B0003_14"
+    21300030: RigthLeg_Back
+    21300032: RigthLeg_Back_S
+    21300034: Ass
+    21300036: Ass_S
+    21300038: Back
+    21300040: LeftHand_Front
+    21300042: LeftHand_Front_S
+    21300044: "\u043C\u0443\u0441\u043A\u0443\u043B\u044B0003_22"
+    21300046: LeftHand_Back_S
+    21300048: "\u043C\u0443\u0441\u043A\u0443\u043B\u044B0003_25"
+    21300050: LeftHand_Back
+    21300052: FemoralLeft_Front
+    21300054: FemoralLeft_Front_S
+    21300056: FemoralRight_Front_S
+    21300058: FemoralRight_Front
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: iPhone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Windows Store Apps
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Press_S
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 1289
+        width: 277
+        height: 272
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Chest_S
+      rect:
+        serializedVersion: 2
+        x: 471
+        y: 1341
+        width: 475
+        height: 239
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Press
+      rect:
+        serializedVersion: 2
+        x: 1032
+        y: 1323
+        width: 291
+        height: 303
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Chest
+      rect:
+        serializedVersion: 2
+        x: 1477
+        y: 1278
+        width: 496
+        height: 279
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: RigthHand_Front_S
+      rect:
+        serializedVersion: 2
+        x: 2121
+        y: 1228
+        width: 278
+        height: 307
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: RigthHand_Back_S
+      rect:
+        serializedVersion: 2
+        x: 2573
+        y: 1256
+        width: 282
+        height: 301
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: LeftLeg_Back_S
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 643
+        width: 160
+        height: 521
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: LeftLeg_Back
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 643
+        width: 158
+        height: 521
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Head_S
+      rect:
+        serializedVersion: 2
+        x: 701
+        y: 918
+        width: 291
+        height: 362
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Head
+      rect:
+        serializedVersion: 2
+        x: 1078
+        y: 924
+        width: 341
+        height: 365
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Back_S
+      rect:
+        serializedVersion: 2
+        x: 1585
+        y: 909
+        width: 378
+        height: 289
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: RigthHand_Front
+      rect:
+        serializedVersion: 2
+        x: 2105
+        y: 850
+        width: 324
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: RigthHand_Back
+      rect:
+        serializedVersion: 2
+        x: 2555
+        y: 850
+        width: 303
+        height: 304
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: RigthLeg_Back
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 66
+        width: 159
+        height: 522
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: RigthLeg_Back_S
+      rect:
+        serializedVersion: 2
+        x: 386
+        y: 65
+        width: 161
+        height: 518
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Ass
+      rect:
+        serializedVersion: 2
+        x: 671
+        y: 525
+        width: 339
+        height: 359
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Ass_S
+      rect:
+        serializedVersion: 2
+        x: 1092
+        y: 536
+        width: 339
+        height: 339
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Back
+      rect:
+        serializedVersion: 2
+        x: 1579
+        y: 514
+        width: 388
+        height: 302
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: LeftHand_Front
+      rect:
+        serializedVersion: 2
+        x: 2158
+        y: 508
+        width: 328
+        height: 310
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: LeftHand_Front_S
+      rect:
+        serializedVersion: 2
+        x: 2543
+        y: 527
+        width: 278
+        height: 308
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: LeftHand_Back_S
+      rect:
+        serializedVersion: 2
+        x: 601
+        y: 63
+        width: 283
+        height: 301
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: LeftHand_Back
+      rect:
+        serializedVersion: 2
+        x: 979
+        y: 64
+        width: 290
+        height: 305
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FemoralLeft_Front
+      rect:
+        serializedVersion: 2
+        x: 1367
+        y: 6
+        width: 196
+        height: 485
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FemoralLeft_Front_S
+      rect:
+        serializedVersion: 2
+        x: 1745
+        y: 34
+        width: 193
+        height: 404
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FemoralRight_Front_S
+      rect:
+        serializedVersion: 2
+        x: 2185
+        y: 34
+        width: 192
+        height: 406
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FemoralRight_Front
+      rect:
+        serializedVersion: 2
+        x: 2601
+        y: 6
+        width: 208
+        height: 490
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
