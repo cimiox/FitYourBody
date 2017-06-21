@@ -22,7 +22,7 @@ public class Cell : MonoBehaviour
 
     public void Buy()
     {
-        if (ClickManager.Money > Properties.Cost)
-            ClickManager.Money -= Convert.ToInt32(Properties.Cost);
+        if (PlayerAttributes.Money > Properties.Cost)
+            PlayerAttributes.Money -= Convert.ToInt32(Properties.Cost);
     }
 }

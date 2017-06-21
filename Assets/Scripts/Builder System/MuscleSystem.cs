@@ -2,11 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MuscleSystem : MonoBehaviour
 {
-    public delegate void ChangingText();
-    public static event ChangingText ChangeText;
+    public delegate void ChangingClicks(object slider);
+    public static event ChangingClicks ChangeClicks;
 
     public static GameObject ZoomableGO { get; set; }
     public static float Multiplier { get; set; }
@@ -18,7 +19,7 @@ public class MuscleSystem : MonoBehaviour
         set
         {
             clicks = value;
-            ChangeText();
+            ChangeClicks(ClickManager.experience);
         }
     }
     public bool isZoom { get; set; }
@@ -36,7 +37,7 @@ public class MuscleSystem : MonoBehaviour
 
     private void Init()
     {
-        ZoomSystem.Zoom(ZoomableGO = gameObject);
+        //ZoomSystem.Zoom(ZoomableGO );
         isZoom = true;
         Multiplier = 1;
     }

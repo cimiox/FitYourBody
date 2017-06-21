@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ZoomSystem : MonoBehaviour
+public class ZoomSystem : ScriptableObject
 {
     public static bool isClick { get; set; }
     private static Vector3 startCameraPosition = Vector3.zero;
