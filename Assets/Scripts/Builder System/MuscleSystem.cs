@@ -6,20 +6,21 @@ using UnityEngine.UI;
 
 public class MuscleSystem : MonoBehaviour
 {
-    public delegate void ChangingClicks(object slider);
+    public delegate void ChangingClicks(Slider slider);
     public static event ChangingClicks ChangeClicks;
 
     public static GameObject ZoomableGO { get; set; }
     public static float Multiplier { get; set; }
 
-    private int clicks;
-    public int Clicks
+    private float clicks;
+    public float Clicks
     {
         get { return clicks; }
         set
         {
             clicks = value;
-            ChangeClicks(ClickManager.experience);
+            if (ChangeClicks != null)
+                ChangeClicks(ClickManager.experience);
         }
     }
     public bool isZoom { get; set; }
@@ -37,7 +38,7 @@ public class MuscleSystem : MonoBehaviour
 
     private void Init()
     {
-        //ZoomSystem.Zoom(ZoomableGO );
+        //ZoomSystem.Zoom(ZoomableGO);
         isZoom = true;
         Multiplier = 1;
     }

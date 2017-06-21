@@ -7,22 +7,17 @@ using UnityEngine.UI;
 
 public class ClickManager : MonoBehaviour
 {
+    public GameObject player;
     public Text clicksText;
     public static Slider experience;
 
-    private void Init()
-    {
-        PlayerAttributes.Experience.Level = 1;
-    }
     void Awake()
     {
         experience = GameObject.Find("Experience").GetComponent<Slider>();
     }
     private void Start()
     {
-        MuscleSystem.ChangeClicks += PlayerAttributes.Experience.MuscleSystem_ChangeClicks;
-        PlayerAttributes.Init();
-        StartCoroutine(PlayerAttributes.Experience.UpLevelAnimation(experience, 100, 1));
+        MuscleSystem.ChangeClicks += player.GetComponent<PlayerAttributes>().MuscleSystem_ChangeClicks;
     }
     
     private static bool isNextLevel()
@@ -30,8 +25,6 @@ public class ClickManager : MonoBehaviour
         return true;
         //return AllClicks(GameObject.Find("Img")) >= PlayerAttributes.experience.GetExp(PlayerAttributes.experience.Level);
     }
-
-    
 
     public void BackToPlayer()
     {
