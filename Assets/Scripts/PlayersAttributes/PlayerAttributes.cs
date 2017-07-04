@@ -5,21 +5,35 @@ using UnityEngine.UI;
 
 public class PlayerAttributes : MonoBehaviour
 {
+    public delegate void LevelChanged();
+    public static event LevelChanged OnLevelChanged;
+
     public static int Money { get; set; }
-    private static float level;
-    public static float Level
+    private static int level = 1;
+    public static int Level
     {
         get { return level;}
         set 
         { 
             level = value;
-            ClickManager.experience.value = 0f;
+            OnLevelChanged();
         }
     }
     
 	public static float NowExperience { get; set; }	
 	private readonly float StartExp = 150;
-	
+    
+    private void Awake()
+    {
+        OnLevelChanged += LevelChanged_OnLevelChanged;
+    }
+
+    private void LevelChanged_OnLevelChanged()
+    {
+        ClickManager.experience.value = 0f;
+        ClickManager.experience.maxValue = GetExp(level);
+    }
+
 	public float GetExp(float level)
     {
         if (level <= 1)
@@ -28,28 +42,31 @@ public class PlayerAttributes : MonoBehaviour
         return StartExp * level + GetExp(level - 1);
     }
 
-	public void UpLevel(Slider slider, float sumClicks)
+	public void UpLevel(Slider slider, float countClicks)
     {
-        slider.maxValue = GetExp(Level);
-        
-		if(sumClicks < slider.maxValue)
-		{
-            slider.value += sumClicks;
-            //StartCoroutine(UpLevelAnimation(slider, sumClicks, 1f));
-		}
-        else
-		{
-            slider.value += slider.maxValue;
-            //StartCoroutine(UpLevelAnimation(slider, slider.maxValue, 1f));
+        if(slider.value >= slider.maxValue)
             Level++;
-            UpLevel(slider, sumClicks - slider.maxValue);
-		}
+        else 
+        {
+            if(countClicks < slider.maxValue)
+            {
+                slider.value += countClicks;
+                //StartCoroutine(UpLevelAnimation(slider, countClicks, 1f));
+            }
+            else if(countClicks > slider.maxValue)
+            {
+                slider.value += slider.maxValue;
+                //StartCoroutine(UpLevelAnimation(slider, slider.maxValue, 1f));
+                Level++;
+                UpLevel(slider, countClicks - slider.maxValue);
+            }
+        }
     }
 
-	public void MuscleSystem_ChangeClicks(Slider slider)
+	public void MuscleSystem_ChangeClicks(float count)
     {
         //clicksText.text = string.Format("Clicks: {0}\nLevel: {1}", MuscleSystem.ZoomableGO.GetComponent<MuscleSystem>().Clicks, PlayerAttributes.Expirience.Level);
-		UpLevel(slider, MuscleSystem.ZoomableGO.GetComponent<MuscleSystem>().Clicks);
+		UpLevel(ClickManager.experience, count);
 	}
 
     private IEnumerator UpLevelAnimation(Slider slider, float value, float speed)

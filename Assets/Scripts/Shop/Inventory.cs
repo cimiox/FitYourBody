@@ -15,20 +15,46 @@ public abstract class Inventory : MonoBehaviour
                 return cellPrefab = Resources.Load<GameObject>("Shop/Cell");
             return cellPrefab;
         }
-        private set { cellPrefab = value; }
     }
 
-    protected void Init(List<Item> items, GameObject prefab, Transform thisGO)
+    protected virtual void Inititalize(IInventory type, Transform thisGO)
     {
-        for (int i = 0; i < items.Count; i++)
+        type.Items = GetItemsJson(type.ItemsDB);
+        
+        for (int i = 0; i < type.Items.Count; i++)
         {
-            GameObject cell = Instantiate(prefab, thisGO);
-            var cellComponent = cell.GetComponent<Cell>();
-            cellComponent.Name.text = items[i].Name;
-            cellComponent.Sprite.sprite = items[i].Sprite;
-            cellComponent.Description.text = items[i].Multiplier.ToString();
-            cellComponent.BuyBtn.GetComponentInChildren<Text>().text = string.Format("Buy({0})", items[i].Cost);
-            cellComponent.Properties = items[i];
+            type.Items[i].IsUnlock = PlayerAttributes.Level <= type.Items[i].LevelNeed ? true : false;
+
+            Cell cell = Instantiate(cellPrefab, thisGO).GetComponent<Cell>();
+            cell.Name.text = type.Items[i].Name;
+            cell.Sprite.sprite = type.Items[i].Sprite;
+            cell.Description.text = type.Items[i].Multiplier.ToString();
+            cell.Properties = type.Items[i];
+
+            cell.BuyBtn.enabled = type.Items[i].IsUnlock ? true : false;
+            cell.BuyBtn.GetComponentInChildren<Text>().text = string.Format("Buy({0})", type.Items[i].Cost);
+
+            type.Cells.Add(cell);
         }
+    }
+
+    protected int GetNewItems(int level, IInventory inventory)
+    {
+        int countNotifications = 0;
+        for (int i = 0; i < inventory.Cells.Count; i++)
+        {
+            if (level <= inventory.Cells[i].Properties.LevelNeed)
+            {
+                inventory.Cells[i].BuyBtn.enabled = true;
+                countNotifications++;
+            }
+        }
+
+        return countNotifications;
+    }
+
+    private List<Item> GetItemsJson(TextAsset json)
+    {
+        return JsonConvert.DeserializeObject<List<Item>>(json.text);
     }
 }

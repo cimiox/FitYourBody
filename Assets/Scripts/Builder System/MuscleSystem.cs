@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class MuscleSystem : MonoBehaviour
 {
-    public delegate void ChangingClicks(Slider slider);
+    public delegate void ChangingClicks(float count);
     public static event ChangingClicks ChangeClicks;
 
     public static GameObject ZoomableGO { get; set; }
@@ -18,15 +18,18 @@ public class MuscleSystem : MonoBehaviour
         get { return clicks; }
         set
         {
-            clicks = value;
             if (ChangeClicks != null)
-                ChangeClicks(ClickManager.experience);
+                ChangeClicks(value - clicks);
+
+            clicks = value;
         }
     }
     public bool isZoom { get; set; }
 
     private void OnMouseDown()
     {
+        ZoomableGO = gameObject;
+
         if (!isZoom)
         {
             Init();
@@ -38,7 +41,7 @@ public class MuscleSystem : MonoBehaviour
 
     private void Init()
     {
-        //ZoomSystem.Zoom(ZoomableGO);
+        ZoomSystem.Zoom(ZoomableGO);
         isZoom = true;
         Multiplier = 1;
     }

@@ -6,5 +6,6 @@ public interface IInventory
 {
     TextAsset ItemsDB { get; set; }
     List<Item> Items { get; set; }
-    void Init();
+    string Path { get; set; }
+    List<Cell> Cells { get; set; }
 }
