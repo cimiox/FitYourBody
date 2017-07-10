@@ -12,6 +12,17 @@ public class MuscleSystem : MonoBehaviour
     public static GameObject ZoomableGO { get; set; }
     public static float Multiplier { get; set; }
 
+    private int muscleLevel;
+    public int MuscleLevel
+    {
+        get { return PlayerPrefs.GetInt("MuscleLevel", 1);}
+        set 
+        {
+            muscleLevel = value;
+            PlayerPrefs.SetInt("MuscleLevel", muscleLevel);
+        }
+    }
+    
     private float clicks;
     public float Clicks
     {
@@ -24,6 +35,7 @@ public class MuscleSystem : MonoBehaviour
             clicks = value;
         }
     }
+
     public bool isZoom { get; set; }
 
     private void OnMouseDown()
