@@ -1201,6 +1201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddf4cd364d2c95b40b1dc2b3f08c457c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MuscleLevel: 4
 --- !u!1 &182509178
 GameObject:
   m_ObjectHideFlags: 0
@@ -1349,6 +1350,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2d41ebb0d72ae44bbbe108db45e4685, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MuscleLevel: 5
 --- !u!1 &184700409
 GameObject:
   m_ObjectHideFlags: 0
@@ -2967,6 +2969,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d45ad4bd77bdc04cb63428d817849e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MuscleLevel: 4
 --- !u!1 &393721426 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1503579913567226, guid: 60d654a771d460c46993ac8026a750e0,
@@ -3064,6 +3067,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddf4cd364d2c95b40b1dc2b3f08c457c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MuscleLevel: 5
 --- !u!1 &405267657
 GameObject:
   m_ObjectHideFlags: 0
@@ -4247,17 +4251,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5c05b7b28d451c4e82d1487806fea4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &620985883
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 620985880}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5c05b7b28d451c4e82d1487806fea4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  MuscleLevel: 1
 --- !u!1 &629986920
 GameObject:
   m_ObjectHideFlags: 0
@@ -4553,6 +4547,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5c05b7b28d451c4e82d1487806fea4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MuscleLevel: 5
 --- !u!1 &642606196 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1122745402189684, guid: 60d654a771d460c46993ac8026a750e0,
@@ -4673,6 +4668,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5c05b7b28d451c4e82d1487806fea4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MuscleLevel: 5
 --- !u!1 &646182223
 GameObject:
   m_ObjectHideFlags: 0
@@ -4854,6 +4850,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddf4cd364d2c95b40b1dc2b3f08c457c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MuscleLevel: 1
 --- !u!1 &708679326
 GameObject:
   m_ObjectHideFlags: 0
@@ -5428,6 +5425,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2d41ebb0d72ae44bbbe108db45e4685, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MuscleLevel: 3
 --- !u!1 &779449722
 GameObject:
   m_ObjectHideFlags: 0
@@ -5660,6 +5658,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddf4cd364d2c95b40b1dc2b3f08c457c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MuscleLevel: 3
 --- !u!1 &798867978
 GameObject:
   m_ObjectHideFlags: 0
@@ -5884,6 +5883,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5c05b7b28d451c4e82d1487806fea4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MuscleLevel: 3
 --- !u!1 &819439608
 GameObject:
   m_ObjectHideFlags: 0
@@ -6281,6 +6281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2d41ebb0d72ae44bbbe108db45e4685, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MuscleLevel: 4
 --- !u!1 &891837654
 GameObject:
   m_ObjectHideFlags: 0
@@ -6956,6 +6957,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d45ad4bd77bdc04cb63428d817849e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MuscleLevel: 3
 --- !u!1 &1023704902
 GameObject:
   m_ObjectHideFlags: 0
@@ -7962,6 +7964,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5c05b7b28d451c4e82d1487806fea4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MuscleLevel: 1
 --- !u!1 &1143580228
 GameObject:
   m_ObjectHideFlags: 0
@@ -8290,6 +8293,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5c05b7b28d451c4e82d1487806fea4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MuscleLevel: 4
 --- !u!1 &1212573205
 GameObject:
   m_ObjectHideFlags: 0
@@ -8589,6 +8593,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2d41ebb0d72ae44bbbe108db45e4685, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MuscleLevel: 2
 --- !u!1 &1240277243
 GameObject:
   m_ObjectHideFlags: 0
@@ -9129,6 +9134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5c05b7b28d451c4e82d1487806fea4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MuscleLevel: 2
 --- !u!1 &1351514426
 GameObject:
   m_ObjectHideFlags: 0
@@ -9615,6 +9621,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5c05b7b28d451c4e82d1487806fea4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MuscleLevel: 3
 --- !u!1 &1423314416 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1367547689043766, guid: 60d654a771d460c46993ac8026a750e0,
@@ -9716,6 +9723,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddf4cd364d2c95b40b1dc2b3f08c457c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MuscleLevel: 2
 --- !u!1 &1433466550
 GameObject:
   m_ObjectHideFlags: 0
@@ -10734,6 +10742,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d45ad4bd77bdc04cb63428d817849e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MuscleLevel: 5
 --- !u!1 &1495108852
 GameObject:
   m_ObjectHideFlags: 0
@@ -10882,6 +10891,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2d41ebb0d72ae44bbbe108db45e4685, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MuscleLevel: 1
 --- !u!1 &1500157348
 GameObject:
   m_ObjectHideFlags: 0
@@ -11514,6 +11524,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5c05b7b28d451c4e82d1487806fea4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MuscleLevel: 4
 --- !u!1 &1621379222
 GameObject:
   m_ObjectHideFlags: 0
@@ -12362,6 +12373,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d45ad4bd77bdc04cb63428d817849e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MuscleLevel: 2
 --- !u!1 &1765553892
 GameObject:
   m_ObjectHideFlags: 0
@@ -12545,6 +12557,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5c05b7b28d451c4e82d1487806fea4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MuscleLevel: 2
 --- !u!1 &1836233836
 GameObject:
   m_ObjectHideFlags: 0
@@ -13153,6 +13166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d45ad4bd77bdc04cb63428d817849e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MuscleLevel: 1
 --- !u!1 &1882971516
 GameObject:
   m_ObjectHideFlags: 0
