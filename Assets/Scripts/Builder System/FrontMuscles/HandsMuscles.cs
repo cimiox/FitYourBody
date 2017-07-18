@@ -21,16 +21,19 @@ public class HandsMuscles : Muscle
 		}
 	}
 	public override bool IsZoom { get; set; }
-    public int MuscleLevel;
+    public override int MuscleLevel { get; set; }
 
     public override event ChangingClicks ChangeClicks;
+    public static bool IsCalled { get; set; }
 
     private void Awake()
     {
-        //TODO: Block Many calles
-        foreach (var item in SetMusclesInList(MuscleLevel, gameObject.transform.parent.transform.parent.gameObject))
+        if (!IsCalled)
         {
-            Muscles.Add(item.Key, item.Value);
+            AddMuscles(SetMusclesInList(gameObject.transform.parent.transform.parent.gameObject));
+
+            IsCalled = true;
+            //TODO: change for player prefs
         }
     }
 
@@ -52,29 +55,41 @@ public class HandsMuscles : Muscle
         }
 
         LocalClicks += Convert.ToInt32(1 * Multiplier);
-        print(LocalClicks);
-        if (LocalClicks >= GetMuscleExperience(MuscleLevel))
-            MuscleLevelUp(MuscleLevel, gameObject.transform.parent.transform.parent.gameObject);
+
+        if (localClicks >= GetMuscleExperience(MuscleLevel))
+            MuscleLevelUp(MuscleLevel, Muscles);
     }
 
-    protected override void MuscleLevelUp(int muscleLevel, GameObject parent)
+    protected override void MuscleLevelUp(int muscleLevel, List<MuscleItems> list)
     {
-        foreach(var item in parent.GetComponentsInChildren<HandsMuscles>())
+        int countHands = 0;
+        foreach(var item in list)
         {
-            if (item.MuscleLevel == ++muscleLevel)
-                item.gameObject.SetActive(true);
+            if (item.Muscle is HandsMuscles)
+            {
+                if (item.Muscle.MuscleLevel == (muscleLevel + 1))
+                {
+                    item.MuscleGO.SetActive(true);
+                    gameObject.SetActive(false);
+                }
+            }
         }
-
-        gameObject.SetActive(false);
     }
 
-    protected override Dictionary<GameObject, Muscle> SetMusclesInList(int muscleLevel, GameObject parent)
+    protected override List<MuscleItems> SetMusclesInList(GameObject parent)
     {
-        var muscles = new Dictionary<GameObject, Muscle>();
+        var muscles = new List<MuscleItems>();
 
-        foreach (var item in parent.GetComponentsInChildren<PressMuscle>())
+        int muscleLevel = 0;
+
+        for (int i = 0; i < parent.GetComponentsInChildren<HandsMuscles>().Length; i++)
         {
-            muscles.Add(item.gameObject, item);
+            if((i + 1) % 2 == 0)
+                parent.GetComponentsInChildren<HandsMuscles>()[i].MuscleLevel = parent.GetComponentsInChildren<HandsMuscles>()[i - 1].MuscleLevel;
+            else
+                parent.GetComponentsInChildren<HandsMuscles>()[i].MuscleLevel = ++muscleLevel;
+
+            muscles.Add(new MuscleItems(parent.GetComponentsInChildren<HandsMuscles>()[i].gameObject, parent.GetComponentsInChildren<HandsMuscles>()[i]));
         }
 
         return muscles;
