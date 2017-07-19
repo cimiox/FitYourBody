@@ -63,7 +63,7 @@ public class PlayerAttributes : MonoBehaviour
         }
     }
 
-	public void MuscleSystem_ChangeClicks(float count)
+	public void Muscle_ChangeClicks(float count)
     {
         //clicksText.text = string.Format("Clicks: {0}\nLevel: {1}", MuscleSystem.ZoomableGO.GetComponent<MuscleSystem>().Clicks, PlayerAttributes.Expirience.Level);
 		UpLevel(ClickManager.experience, count);

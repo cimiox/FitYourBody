@@ -19,6 +19,7 @@ public abstract class Inventory : MonoBehaviour
 
     protected virtual void Inititalize(IInventory type, Transform thisGO)
     {
+        type.ItemsDB = Resources.Load<TextAsset>(type.Path);
         type.Items = GetItemsJson(type.ItemsDB);
         
         for (int i = 0; i < type.Items.Count; i++)

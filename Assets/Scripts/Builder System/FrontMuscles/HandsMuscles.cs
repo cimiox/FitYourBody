@@ -53,7 +53,7 @@ public class HandsMuscles : Muscle
             Initialize();
             return;
         }
-
+        
         LocalClicks += Convert.ToInt32(1 * Multiplier);
 
         if (localClicks >= GetMuscleExperience(MuscleLevel))
@@ -62,7 +62,6 @@ public class HandsMuscles : Muscle
 
     protected override void MuscleLevelUp(int muscleLevel, List<MuscleItems> list)
     {
-        int countHands = 0;
         foreach(var item in list)
         {
             if (item.Muscle is HandsMuscles)

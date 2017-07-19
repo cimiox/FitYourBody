@@ -17,7 +17,10 @@ public class ClickManager : MonoBehaviour
     }
     private void Start()
     {
-        MuscleSystem.ChangeClicks += player.GetComponent<PlayerAttributes>().MuscleSystem_ChangeClicks;
+        for (int i = 0; i < Muscle.Muscles.Count; i++)
+        {
+            Muscle.Muscles[i].Muscle.ChangeClicks += player.GetComponent<PlayerAttributes>().Muscle_ChangeClicks;
+        }
     }
     
     private static bool isNextLevel()

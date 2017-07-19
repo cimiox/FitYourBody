@@ -24,6 +24,7 @@ public class GeinerShop : SportNutrition, IInventory
 	{
 		CountNotifications = base.GetNewItems(PlayerAttributes.Level, this);
 	}
+
 	private void Awake()
 	{
 		Inititalize(this, transform);

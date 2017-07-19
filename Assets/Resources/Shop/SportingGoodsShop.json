@@ -1,0 +1,93 @@
+﻿
+[
+ {
+    "ID": 1,
+    "Name": "Гантеля",
+    "Description": "Снаряд для развития двуглавой мышцы плеча или бицепса.",
+    "Image": "gantel1.png",
+    "Multiplier": 1.2,
+    "Cost": 50,
+    "Level": 3
+  },
+ {
+    "ID": 2,
+    "Name": "Брусья",
+    "Description": "Тренажер для развития трицепса.",
+    "Image": "brus1.png",
+    "Multiplier": 1.2,
+    "Cost": 200,
+    "Level": 6
+  },
+ {
+    "ID": 3,
+    "Name": "Гиря",
+    "Description": "Спортивный снаряд для развития трапеции.",
+    "Image": "gira1.png",
+    "Multiplier": 1.2,
+    "Cost": 300,
+    "Level": 8
+  },
+{
+    "ID": 4,
+    "Name": "Штанга",
+    "Description": "Спортивный снаряд для развития грудных мышц.",
+    "Image": "shtanga1.png",
+    "Multiplier": 1.3,
+    "Cost": 450,
+    "Level": 15
+  },
+{
+    "ID": 5,
+    "Name": "Становая штанга",
+    "Description": "Спортивный снаряд для развития ягодичных мышц.",
+    "Image": "stanshtanga1.png",
+    "Multiplier": 1.3,
+    "Cost": 690,
+    "Level": 15
+  },
+{
+    "ID": 6,
+    "Name": "Гантели Two",
+    "Description": "Снаряд с большим весом для развития двуглавой мышцы плеча или бицепса.",
+    "Image": "gantel2.png",
+    "Multiplier": 1.4,
+    "Cost": 900,
+    "Level": 17
+  },
+{
+    "ID": 7,
+    "Name": "Гиря Two",
+    "Description": "Снаряд с большим весом для развития трапеции.",
+    "Image": "gira2.png",
+    "Multiplier": 1.4,
+    "Cost": 1500,
+    "Level": 18
+  },
+{
+    "ID": 8,
+    "Name": "Штанга +",
+    "Description": "Спортивный снаряд с большим весом для развития грудных мышц.",
+    "Image": "shtanga2.png",
+    "Multiplier": 1.6,
+    "Cost": 2200,
+    "Level": 20
+  },
+{
+    "ID": 9,
+    "Name": "Становая штанга +",
+    "Description": "Спортивный снаряд для развития ягодичных мышц.",
+    "Image": "stanshtanga2.png",
+    "Multiplier": 1.7,
+    "Cost": 2300,
+    "Level": 20
+  },
+{
+    "ID": 10,
+    "Name": "Гантеля +",
+    "Description": "Снаряд с большим весом для развития двуглавой мышцы плеча или бицепса.",
+    "Image": "gantel3.png",
+    "Multiplier": 1.7,
+    "Cost": 6900,
+    "Level": 22
+  },
+]
