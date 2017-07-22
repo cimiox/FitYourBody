@@ -5,25 +5,6 @@ using UnityEngine;
 
 public class ChestMuscle : Muscle
 {
-    public override event ChangingClicks ChangeClicks;
-
-	private float localClicks;
-    public override float LocalClicks 
-	{ 
-		get
-		{
-			return localClicks;
-		} 
-		set
-		{
-            if (ChangeClicks != null)
-                ChangeClicks(value - localClicks);
-                
-			localClicks = value;
-		}
-	}
-	public override bool IsZoom { get; set; }
-    public override int MuscleLevel { get; set; } = 1;
     public static bool IsCalled { get; set; }
 
     private void Awake()
@@ -43,25 +24,9 @@ public class ChestMuscle : Muscle
         Multiplier = 1;
     }
 
-    protected override void OnMouseDown()
-    {
-        ZoomableGO = gameObject;
-
-        if (!IsZoom)
-        {
-            Initialize();
-            return;
-        }
-
-        LocalClicks += Convert.ToInt32(1 * Multiplier);
-        
-        if (localClicks >= GetMuscleExperience(MuscleLevel))
-            MuscleLevelUp(MuscleLevel, Muscles);
-    }
-
     protected override void MuscleLevelUp(int muscleLevel, List<MuscleItems> list)
     {
-        foreach(var item in list)
+        foreach (var item in list)
         {
             if (item.Muscle is ChestMuscle)
             {
@@ -80,7 +45,7 @@ public class ChestMuscle : Muscle
         var muscles = new List<MuscleItems>();
 
         int muscleLevel = 0;
-        
+
         foreach (var item in parent.GetComponentsInChildren<ChestMuscle>())
         {
             item.MuscleLevel = ++muscleLevel;
