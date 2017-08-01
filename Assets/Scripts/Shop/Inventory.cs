@@ -21,12 +21,12 @@ public abstract class Inventory : MonoBehaviour
     {
         type.ItemsDB = Resources.Load<TextAsset>(type.Path);
         type.Items = GetItemsJson(type.ItemsDB);
-        
+
         for (int i = 0; i < type.Items.Count; i++)
         {
-            type.Items[i].IsUnlock = PlayerAttributes.Level <= type.Items[i].LevelNeed ? true : false;
+            type.Items[i].IsUnlock = PlayerAttributes.Level <= type.Items[i].Level ? true : false;
 
-            Cell cell = Instantiate(cellPrefab, thisGO).GetComponent<Cell>();
+            Cell cell = Instantiate(CellPrefab, thisGO).GetComponent<Cell>();
             cell.Name.text = type.Items[i].Name;
             cell.Sprite.sprite = type.Items[i].Sprite;
             cell.Description.text = type.Items[i].Multiplier.ToString();
@@ -44,7 +44,7 @@ public abstract class Inventory : MonoBehaviour
         int countNotifications = 0;
         for (int i = 0; i < inventory.Cells.Count; i++)
         {
-            if (level <= inventory.Cells[i].Properties.LevelNeed)
+            if (level <= inventory.Cells[i].Properties.Level)
             {
                 inventory.Cells[i].BuyBtn.enabled = true;
                 countNotifications++;

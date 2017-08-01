@@ -14,7 +14,7 @@ public class SportingGoods : NotDonate, IInventory
 	{
 		Cells = new List<Cell>();
 		
-		Path = "Shop/SportingGoods";
+		Path = "Shop/SportingGoodsShop";
 	
 		base.Inititalize(type, thisGO);
 
@@ -23,7 +23,7 @@ public class SportingGoods : NotDonate, IInventory
 
 	private void LevelChanged_OnLevelChanged()
 	{
-		CountNotifications = base.GetNewItems(PlayerAttributes.Level, this);
+		CountNotifications = GetNewItems(PlayerAttributes.Level, this);
 	}
 
 	private void Awake()

@@ -12,7 +12,9 @@ public class ProteinShop : SportNutrition, IInventory
 
 	protected override void Inititalize(IInventory type, Transform thisGO)
 	{
-		Path = "Shop/ProteinShop";
+        Cells = new List<Cell>();
+
+        Path = "Shop/ProteinShop";
 
 		base.Inititalize(type, thisGO);
 

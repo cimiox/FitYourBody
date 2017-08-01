@@ -13,7 +13,9 @@ public class GeinerShop : SportNutrition, IInventory
 
 	protected override void Inititalize(IInventory type, Transform thisGO)
 	{
-		Path = "Shop/GeinerShop";
+        Cells = new List<Cell>();
+
+        Path = "Shop/GeinerShop";
 
 		base.Inititalize(type, thisGO);
 

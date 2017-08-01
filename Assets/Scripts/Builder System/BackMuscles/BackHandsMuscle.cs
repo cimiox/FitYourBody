@@ -45,14 +45,14 @@ public class BackHandsMuscle : Muscle
 
         int muscleLevel = 0;
 
-        for (int i = 0; i < parent.GetComponentsInChildren<HandsMuscles>().Length; i++)
+        for (int i = 0; i < parent.GetComponentsInChildren<BackHandsMuscle>().Length; i++)
         {
             if ((i + 1) % 2 == 0)
-                parent.GetComponentsInChildren<HandsMuscles>()[i].MuscleLevel = parent.GetComponentsInChildren<HandsMuscles>()[i - 1].MuscleLevel;
+                parent.GetComponentsInChildren<BackHandsMuscle>()[i].MuscleLevel = parent.GetComponentsInChildren<BackHandsMuscle>()[i - 1].MuscleLevel;
             else
-                parent.GetComponentsInChildren<HandsMuscles>()[i].MuscleLevel = ++muscleLevel;
+                parent.GetComponentsInChildren<BackHandsMuscle>()[i].MuscleLevel = ++muscleLevel;
 
-            muscles.Add(new MuscleItems(parent.GetComponentsInChildren<HandsMuscles>()[i].gameObject, parent.GetComponentsInChildren<HandsMuscles>()[i]));
+            muscles.Add(new MuscleItems(parent.GetComponentsInChildren<BackHandsMuscle>()[i].gameObject, parent.GetComponentsInChildren<BackHandsMuscle>()[i]));
         }
 
         return muscles;
