@@ -32,7 +32,7 @@ public abstract class Muscle : MonoBehaviour
     public static List<MuscleItems> Muscles { get; set; } = new List<MuscleItems>();
 
     private int[] MuscleExperience = new int[10]
-    {5, 10, 15, 20, 25, 29000, 35000, 43000, 47000, 55000};
+    {5, 10, 15, 20, 5000000, 29000, 35000, 43000, 47000, 55000};
 
 
     protected abstract void Initialize();

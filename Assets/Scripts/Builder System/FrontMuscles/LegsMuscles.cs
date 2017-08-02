@@ -31,11 +31,9 @@ public class LegsMuscles : Muscle
             if (item.Muscle is LegsMuscles)
             {
                 if (item.Muscle.MuscleLevel == (muscleLevel + 1))
-                {
                     item.MuscleGO.SetActive(true);
-                    gameObject.SetActive(false);
-                    break;
-                }
+                else if (item.Muscle.MuscleLevel == muscleLevel)
+                    item.MuscleGO.SetActive(false);
             }
         }
     }

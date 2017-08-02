@@ -16,6 +16,7 @@ public abstract class Inventory : MonoBehaviour
             return cellPrefab;
         }
     }
+    public static List<Inventory> Shops { get; set; } = new List<Inventory>();
 
     protected virtual void Inititalize(IInventory type, Transform thisGO)
     {
@@ -57,5 +58,13 @@ public abstract class Inventory : MonoBehaviour
     private List<Item> GetItemsJson(TextAsset json)
     {
         return JsonConvert.DeserializeObject<List<Item>>(json.text);
+    }
+
+    protected void DeactivateAllShops()
+    {
+        for (int i = 0; i < Shops.Count; i++)
+        {
+            Shops[i].gameObject.SetActive(false);
+        }
     }
 }

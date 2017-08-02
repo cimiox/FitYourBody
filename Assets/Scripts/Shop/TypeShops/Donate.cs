@@ -12,7 +12,10 @@ public class Donate : Inventory, IInventory
 
 	protected override void Inititalize(IInventory type, Transform thisGO)
 	{
-		Cells = new List<Cell>();
+        Shops.Add(this);
+
+        Cells = new List<Cell>();
+
 		Path = "Shop/DonateShop";
 		
 		base.Inititalize(type, thisGO);
@@ -29,4 +32,13 @@ public class Donate : Inventory, IInventory
 	{
 		Inititalize(this, transform);
 	}
+
+    public void Activate(string animation)
+    {
+        DeactivateAllShops();
+
+        gameObject.SetActive(true);
+
+        //TODO: Animation
+    }
 }

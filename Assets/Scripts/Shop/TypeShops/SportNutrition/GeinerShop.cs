@@ -13,6 +13,8 @@ public class GeinerShop : SportNutrition, IInventory
 
 	protected override void Inititalize(IInventory type, Transform thisGO)
 	{
+        Shops.Add(this);
+
         Cells = new List<Cell>();
 
         Path = "Shop/GeinerShop";
@@ -31,4 +33,13 @@ public class GeinerShop : SportNutrition, IInventory
 	{
 		Inititalize(this, transform);
 	}
+
+    public void Activate(string animation)
+    {
+        DeactivateAllShops();
+
+        gameObject.SetActive(true);
+
+        //TODO: Animation
+    }
 }
