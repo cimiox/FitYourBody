@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SportingGoods : NotDonate, IInventory
+public class SportingGoods : NotDonate, IShop
 {
 	public TextAsset ItemsDB { get; set; }
     public List<Item> Items { get; set; }
@@ -10,7 +10,7 @@ public class SportingGoods : NotDonate, IInventory
 	public List<Cell> Cells { get; set; }
 	public static int CountNotifications { get; set; }	
 
-	protected override void Inititalize(IInventory type, Transform thisGO)
+	protected override void Inititalize<T>(IShop type, Transform thisGO)
 	{
         Shops.Add(this);
 
@@ -18,7 +18,7 @@ public class SportingGoods : NotDonate, IInventory
 		
 		Path = "Shop/SportingGoodsShop";
 	
-		base.Inititalize(type, thisGO);
+		base.Inititalize<T>(type, thisGO);
 
 		PlayerAttributes.OnLevelChanged += LevelChanged_OnLevelChanged;
 	}
@@ -28,9 +28,14 @@ public class SportingGoods : NotDonate, IInventory
 		CountNotifications = GetNewItems(PlayerAttributes.Level, this);
 	}
 
-	private void Awake()
+    protected override Cell CreateCell(Item item, IShop shop, Transform parent)
+    {
+        return base.CreateCell(item, shop, parent);
+    }
+
+    private void Awake()
 	{
-		Inititalize(this, transform);
+		Inititalize<SportingGoodsItem>(this, transform);
 	}
 
     public void Activate(string animation)

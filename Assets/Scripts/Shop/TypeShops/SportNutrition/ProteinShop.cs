@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProteinShop : SportNutrition, IInventory 
+public class ProteinShop : SportNutrition, IShop 
 {
 	public TextAsset ItemsDB { get; set; }
     public List<Item> Items { get; set; }
@@ -10,7 +10,7 @@ public class ProteinShop : SportNutrition, IInventory
 	public List<Cell> Cells { get; set; }
 	public static int CountNotifications { get; set; }	
 
-	protected override void Inititalize(IInventory type, Transform thisGO)
+	protected override void Inititalize<T>(IShop type, Transform thisGO)
 	{
         Shops.Add(this);
 
@@ -18,19 +18,24 @@ public class ProteinShop : SportNutrition, IInventory
 
         Path = "Shop/ProteinShop";
 
-		base.Inititalize(type, thisGO);
+		base.Inititalize<T>(type, thisGO);
 
 		PlayerAttributes.OnLevelChanged += LevelChanged_OnLevelChanged;
 	}
 
-	private void LevelChanged_OnLevelChanged()
+    protected override Cell CreateCell(Item item, IShop shop, Transform parent)
+    {
+        return base.CreateCell(item, shop, parent);
+    }
+
+    private void LevelChanged_OnLevelChanged()
 	{
-		CountNotifications = base.GetNewItems(PlayerAttributes.Level, this);
+		CountNotifications = GetNewItems(PlayerAttributes.Level, this);
 	}
 
 	private void Awake()
 	{
-		Inititalize(this, transform);
+		Inititalize<SportNutritionItem>(this, transform);
 	}
 
     public void Activate(string animation)

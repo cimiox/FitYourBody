@@ -17,7 +17,7 @@
     "Cost": 80,
     "Level": 6
   },
-{
+  {
     "ID": 3,
     "Name": "Гейнер Super Mass",
     "Image": "geiner3.png",
@@ -26,7 +26,7 @@
     "Cost": 170,
     "Level": 9
   },
-{
+  {
     "ID": 4,
     "Name": "Гейнер Mega Mass",
     "Image": "geiner4.png",
@@ -35,7 +35,7 @@
     "Cost": 300,
     "Level": 11
   },
-{
+  {
     "ID": 5,
     "Name": "Гейнер Gain Bizon",
     "Image": "geiner5.png",
@@ -44,7 +44,7 @@
     "Cost": 450,
     "Level": 13
   },
-{
+  {
     "ID": 6,
     "Name": "Гейнер Olimpia",
     "Image": "geiner6.png",
@@ -53,7 +53,7 @@
     "Cost": 1500,
     "Level": 15
   },
-{
+  {
     "ID": 7,
     "Name": "Гейнер ExtrimeX",
     "Image": "geiner7.png",
@@ -62,7 +62,7 @@
     "Cost": 980,
     "Level": 17
   },
-{
+  {
     "ID": 8,
     "Name": "Гейнер Overdi",
     "Image": "geiner8.png",
@@ -71,7 +71,7 @@
     "Cost": 1400,
     "Level": 19
   },
-{
+  {
     "ID": 9,
     "Name": "Гейнер Titanium",
     "Image": "geiner9.png",
