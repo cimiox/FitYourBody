@@ -1,16 +1,18 @@
 fileFormatVersion: 2
-guid: e4d73d09bc7c6c045b048ba3cbe82e0a
-timeCreated: 1500583178
+guid: 640b0e68957435d4db1486dc47460cce
+timeCreated: 1502534406
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: LeftHand
     21300002: RightHand
-    21300004: Ass
-    21300006: Back
-    21300008: LeftLeg
-    21300010: RightLeg
-    21300012: Neck
+    21300004: Player_Level_4_Back_2
+    21300006: Ass
+    21300008: Player_Level_4_Back_4
+    21300010: Back
+    21300012: Player_Level_4_Back_6
+    21300014: LeftLeg
+    21300016: RightLeg
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -93,10 +95,10 @@ TextureImporter:
       name: LeftHand
       rect:
         serializedVersion: 2
-        x: 95
-        y: 1153
-        width: 367
-        height: 360
+        x: 62
+        y: 1155
+        width: 404
+        height: 364
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -107,10 +109,10 @@ TextureImporter:
       name: RightHand
       rect:
         serializedVersion: 2
-        x: 634
-        y: 1153
-        width: 367
-        height: 360
+        x: 618
+        y: 1155
+        width: 391
+        height: 364
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -121,10 +123,10 @@ TextureImporter:
       name: Ass
       rect:
         serializedVersion: 2
-        x: 120
-        y: 607
-        width: 391
-        height: 442
+        x: 55
+        y: 591
+        width: 462
+        height: 469
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -135,10 +137,10 @@ TextureImporter:
       name: Back
       rect:
         serializedVersion: 2
-        x: 617
-        y: 558
-        width: 366
-        height: 392
+        x: 551
+        y: 106
+        width: 446
+        height: 481
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -149,10 +151,10 @@ TextureImporter:
       name: LeftLeg
       rect:
         serializedVersion: 2
-        x: 124
-        y: 58
-        width: 161
-        height: 494
+        x: 91
+        y: 55
+        width: 157
+        height: 487
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -163,24 +165,10 @@ TextureImporter:
       name: RightLeg
       rect:
         serializedVersion: 2
-        x: 361
-        y: 59
-        width: 161
-        height: 494
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Neck
-      rect:
-        serializedVersion: 2
-        x: 658
-        y: 127
-        width: 270
-        height: 155
+        x: 340
+        y: 55
+        width: 157
+        height: 486
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

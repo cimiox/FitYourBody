@@ -21,19 +21,8 @@ public class Item
         Level = levelNeed;
     }
 
-    public void Buy<T>() where T : IShop
+    public void Buy(Cell cell, IShop shop)
     {
-
-    }
-
-    public void Buy(IShop shopType)
-    {
-
-        if (shopType is SportNutrition)
-        {
-
-        }
-        //else if (shopType is SportNutrition)
-        //else if (shopType is Donate)
+        cell.Remove(shop.Cells);
     }
 }

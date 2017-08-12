@@ -1,17 +1,15 @@
 fileFormatVersion: 2
-guid: 2411c7c18ee4ce140b967897d873e440
-timeCreated: 1500583276
+guid: bf739fbd2c38e8449a09d07d0bf8b448
+timeCreated: 1502529800
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: LeftHand
     21300002: RightHand
     21300004: Ass
-    21300006: Back
-    21300008: LeftLeg
-    21300010: RightLeg
-    21300012: Neck
-    21300014: Player_Level_5_Back_9
+    21300006: LeftLeg
+    21300008: RightLeg
+    21300010: Back
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -94,12 +92,12 @@ TextureImporter:
       name: LeftHand
       rect:
         serializedVersion: 2
-        x: 59
-        y: 1151
-        width: 404
-        height: 364
+        x: 87
+        y: 1154
+        width: 363
+        height: 359
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -108,12 +106,12 @@ TextureImporter:
       name: RightHand
       rect:
         serializedVersion: 2
-        x: 582
-        y: 1152
-        width: 404
-        height: 364
+        x: 641
+        y: 1153
+        width: 367
+        height: 359
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -122,26 +120,12 @@ TextureImporter:
       name: Ass
       rect:
         serializedVersion: 2
-        x: 76
-        y: 585
-        width: 424
-        height: 469
+        x: 112
+        y: 599
+        width: 391
+        height: 445
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Back
-      rect:
-        serializedVersion: 2
-        x: 535
-        y: 556
-        width: 459
-        height: 395
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -150,12 +134,12 @@ TextureImporter:
       name: LeftLeg
       rect:
         serializedVersion: 2
-        x: 91
-        y: 64
-        width: 157
-        height: 490
+        x: 116
+        y: 61
+        width: 161
+        height: 492
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -164,26 +148,26 @@ TextureImporter:
       name: RightLeg
       rect:
         serializedVersion: 2
-        x: 340
-        y: 59
-        width: 157
-        height: 490
+        x: 368
+        y: 61
+        width: 161
+        height: 491
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Neck
+      name: Back
       rect:
         serializedVersion: 2
-        x: 620
-        y: 117
-        width: 306
-        height: 197
+        x: 612
+        y: 84
+        width: 366
+        height: 447
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

@@ -23,31 +23,36 @@ public abstract class Shop : MonoBehaviour
     {
         shop.ItemsDB = Resources.Load<TextAsset>(shop.Path);
 
-        shop.Items = new List<Item>();
-        shop.Items.AddRange(SetParametres(GetItemsJson<T>(shop.ItemsDB), shop, parent));
+        shop.Cells = new List<Cell>();
+        shop.Cells.AddRange(SetParametres(GetItemsJson<T>(shop.ItemsDB), shop, parent));
     }
 
-    private List<T> SetParametres<T>(List<T> items, IShop shop, Transform parent) where T : Item
+    private List<Cell> SetParametres<T>(List<T> items, IShop shop, Transform parent) where T : Item
     {
+        List<Cell> cells = new List<Cell>();
         for (int i = 0; i < items.Count; i++)
         {
             items[i].IsUnlock = PlayerAttributes.Level <= items[i].Level ? true : false;
 
-            shop.Cells.Add(CreateCell(items[i], shop, parent));
+            cells.Add(CreateCell(items[i], shop, parent));
+            cells[i].Properties = items[i];
         }
-        return items;
+        return cells;
     }
 
-    protected virtual Cell CreateCell(Item item, IShop shop, Transform parent)
+    protected virtual Cell CreateCell<T>(T item, IShop shop, Transform parent) where T : Item
     {
         Cell cell = Instantiate(CellPrefab, parent).GetComponent<Cell>();
+
+        //TODO: Shop attributes
+
         cell.Name.text = item.Name;
         cell.Sprite.sprite = item.Sprite;
         //cell.Description.text = type.Items[i].Multiplier.ToString();
         cell.Properties = item;
 
         cell.BuyBtn.interactable = item.IsUnlock ? true : false;
-        cell.BuyBtn.onClick.AddListener(() => item.Buy(shop));
+        cell.BuyBtn.onClick.AddListener(() => item.Buy(cell, shop));
         cell.BuyBtn.GetComponentInChildren<Text>().text = string.Format("Buy({0})", item.Cost);
 
         return cell;
@@ -56,11 +61,12 @@ public abstract class Shop : MonoBehaviour
     protected int GetNewItems(int level, IShop Shop)
     {
         int countNotifications = 0;
-        for (int i = 0; i < Shop.Cells.Count; i++)
+
+        foreach (var item in Shop.Cells)
         {
-            if (level <= Shop.Cells[i].Properties.Level)
+            if (level <= item.Properties.Level)
             {
-                Shop.Cells[i].BuyBtn.enabled = true;
+                item.BuyBtn.enabled = true;
                 countNotifications++;
             }
         }

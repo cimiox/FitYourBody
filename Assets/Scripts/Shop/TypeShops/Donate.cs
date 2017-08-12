@@ -24,7 +24,7 @@ public class Donate : Shop, IShop
         PlayerAttributes.OnLevelChanged += LevelChanged_OnLevelChanged;
     }
 
-    protected override Cell CreateCell(Item item, IShop shop, Transform parent)
+    protected override Cell CreateCell<T>(T item, IShop shop, Transform parent)
     {
         var cell = base.CreateCell(item, shop, parent);
 

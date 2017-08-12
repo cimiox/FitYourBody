@@ -20,9 +20,9 @@ public class Cell : MonoBehaviour
         BuyBtn = gameObject.transform.GetChild(3).GetComponent<Button>();
     }
 
-    public void Buy()
+    public void Remove(List<Cell> cells)
     {
-        if (PlayerAttributes.Money > Properties.Cost)
-            PlayerAttributes.Money -= Convert.ToInt32(Properties.Cost);
+        cells.Remove(this);
+        Destroy(gameObject);
     }
 }
