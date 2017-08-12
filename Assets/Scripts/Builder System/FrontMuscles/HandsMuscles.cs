@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HandsMuscles : Muscle 
+public class HandsMuscles : Muscle
 {
     public static bool IsCalled { get; set; }
 
@@ -11,7 +11,7 @@ public class HandsMuscles : Muscle
     {
         if (!IsCalled)
         {
-            AddMuscles(SetMusclesInList(gameObject.transform.parent.transform.parent.gameObject));
+            AddMuscles(SetMusclesInList<HandsMuscles>(gameObject.transform.parent.transform.parent.gameObject));
 
             IsCalled = true;
             //TODO: change for player prefs
@@ -27,32 +27,29 @@ public class HandsMuscles : Muscle
 
     protected override void MuscleLevelUp(int muscleLevel, List<MuscleItems> list)
     {
-        foreach(var item in list)
+        foreach (var item in list)
         {
             if (item.Muscle is HandsMuscles)
             {
-                if (item.Muscle.MuscleLevel == (muscleLevel + 1))
-                    item.MuscleGO.SetActive(true);
-                else if (item.Muscle.MuscleLevel == muscleLevel)
-                    item.MuscleGO.SetActive(false);
+                item.MuscleGO.SetActive(item.Muscle.MuscleLevel == (muscleLevel + 1) ? true : false);
             }
         }
     }
 
-    protected override List<MuscleItems> SetMusclesInList(GameObject parent)
+    protected override List<MuscleItems> SetMusclesInList<T>(GameObject parent)
     {
         var muscles = new List<MuscleItems>();
 
         int muscleLevel = 0;
 
-        for (int i = 0; i < parent.GetComponentsInChildren<HandsMuscles>().Length; i++)
+        for (int i = 0; i < parent.GetComponentsInChildren<T>().Length; i++)
         {
-            if((i + 1) % 2 == 0)
-                parent.GetComponentsInChildren<HandsMuscles>()[i].MuscleLevel = parent.GetComponentsInChildren<HandsMuscles>()[i - 1].MuscleLevel;
+            if ((i + 1) % 2 == 0)
+                parent.GetComponentsInChildren<T>()[i].MuscleLevel = parent.GetComponentsInChildren<T>()[i - 1].MuscleLevel;
             else
-                parent.GetComponentsInChildren<HandsMuscles>()[i].MuscleLevel = ++muscleLevel;
+                parent.GetComponentsInChildren<T>()[i].MuscleLevel = ++muscleLevel;
 
-            muscles.Add(new MuscleItems(parent.GetComponentsInChildren<HandsMuscles>()[i].gameObject, parent.GetComponentsInChildren<HandsMuscles>()[i]));
+            muscles.Add(new MuscleItems(parent.GetComponentsInChildren<T>()[i].gameObject, parent.GetComponentsInChildren<T>()[i]));
         }
 
         return muscles;

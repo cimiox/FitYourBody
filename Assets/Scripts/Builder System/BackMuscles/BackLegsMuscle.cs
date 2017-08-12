@@ -11,7 +11,7 @@ public class BackLegsMuscle : Muscle
     {
         if (!IsCalled)
         {
-            AddMuscles(SetMusclesInList(gameObject.transform.parent.transform.parent.gameObject));
+            AddMuscles(SetMusclesInList<BackLegsMuscle>(gameObject.transform.parent.transform.parent.gameObject));
 
             IsCalled = true;
         }
@@ -30,28 +30,25 @@ public class BackLegsMuscle : Muscle
         {
             if (item.Muscle is BackLegsMuscle)
             {
-                if (item.Muscle.MuscleLevel == (muscleLevel + 1))
-                    item.MuscleGO.SetActive(true);
-                else if (item.Muscle.MuscleLevel == muscleLevel)
-                    item.MuscleGO.SetActive(false);
+                item.MuscleGO.SetActive(item.Muscle.MuscleLevel == ++muscleLevel ? true : false);
             }
         }
     }
 
-    protected override List<MuscleItems> SetMusclesInList(GameObject parent)
+    protected override List<MuscleItems> SetMusclesInList<T>(GameObject parent)
     {
         var muscles = new List<MuscleItems>();
 
         int muscleLevel = 0;
 
-        for (int i = 0; i < parent.GetComponentsInChildren<BackLegsMuscle>().Length; i++)
+        for (int i = 0; i < parent.GetComponentsInChildren<T>().Length; i++)
         {
             if ((i + 1) % 2 == 0)
-                parent.GetComponentsInChildren<BackLegsMuscle>()[i].MuscleLevel = parent.GetComponentsInChildren<BackLegsMuscle>()[i - 1].MuscleLevel;
+                parent.GetComponentsInChildren<T>()[i].MuscleLevel = parent.GetComponentsInChildren<T>()[i - 1].MuscleLevel;
             else
-                parent.GetComponentsInChildren<BackLegsMuscle>()[i].MuscleLevel = ++muscleLevel;
+                parent.GetComponentsInChildren<T>()[i].MuscleLevel = ++muscleLevel;
 
-            muscles.Add(new MuscleItems(parent.GetComponentsInChildren<BackLegsMuscle>()[i].gameObject, parent.GetComponentsInChildren<BackLegsMuscle>()[i]));
+            muscles.Add(new MuscleItems(parent.GetComponentsInChildren<T>()[i].gameObject, parent.GetComponentsInChildren<T>()[i]));
         }
 
         return muscles;

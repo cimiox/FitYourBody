@@ -21,8 +21,14 @@ public class Item
         Level = levelNeed;
     }
 
-    public void Buy(Cell cell, IShop shop)
+    public bool Buy(Cell cell, IShop shop)
     {
-        cell.Remove(shop.Cells);
+        if (PlayerAttributes.RemoveMoney(cell.Properties.Cost))
+        {
+            cell.Remove(shop.Cells);
+            return true;
+        }
+        else
+            return false;
     }
 }

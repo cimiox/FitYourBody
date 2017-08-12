@@ -11,7 +11,7 @@ public class BackMuscle : Muscle
     {
         if (!IsCalled)
         {
-            AddMuscles(SetMusclesInList(gameObject.transform.parent.transform.parent.gameObject));
+            AddMuscles(SetMusclesInList<BackMuscle>(gameObject.transform.parent.transform.parent.gameObject));
 
             IsCalled = true;
         }
@@ -38,20 +38,5 @@ public class BackMuscle : Muscle
                 }
             }
         }
-    }
-
-    protected override List<MuscleItems> SetMusclesInList(GameObject parent)
-    {
-        var muscles = new List<MuscleItems>();
-
-        int muscleLevel = 0;
-
-        foreach (var item in parent.GetComponentsInChildren<BackMuscle>())
-        {
-            item.MuscleLevel = ++muscleLevel;
-            muscles.Add(new MuscleItems(item.gameObject, item));
-        }
-
-        return muscles;
     }
 }

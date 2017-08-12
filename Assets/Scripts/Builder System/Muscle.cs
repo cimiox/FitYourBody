@@ -37,7 +37,6 @@ public abstract class Muscle : MonoBehaviour
 
     protected abstract void Initialize();
     protected abstract void MuscleLevelUp(int muscleLevel, List<MuscleItems> list);
-    protected abstract List<MuscleItems> SetMusclesInList(GameObject parent);
 
     protected virtual void OnMouseDown()
     {
@@ -72,6 +71,21 @@ public abstract class Muscle : MonoBehaviour
 
             Muscles.Add(new MuscleItems(item.MuscleGO, item.Muscle));
         }
+    }
+
+    protected virtual List<MuscleItems> SetMusclesInList<T>(GameObject parent) where T : Muscle
+    {
+        var muscles = new List<MuscleItems>();
+
+        int muscleLevel = 0;
+
+        foreach (var item in parent.GetComponentsInChildren<T>())
+        {
+            item.MuscleLevel = ++muscleLevel;
+            muscles.Add(new MuscleItems(item.gameObject, item));
+        }
+
+        return muscles;
     }
 
     public struct MuscleItems

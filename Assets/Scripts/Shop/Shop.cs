@@ -54,7 +54,6 @@ public abstract class Shop : MonoBehaviour
         cell.BuyBtn.interactable = item.IsUnlock ? true : false;
         cell.BuyBtn.onClick.AddListener(() => item.Buy(cell, shop));
         cell.BuyBtn.GetComponentInChildren<Text>().text = string.Format("Buy({0})", item.Cost);
-
         return cell;
     }
 
