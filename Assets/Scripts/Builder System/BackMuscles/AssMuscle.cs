@@ -9,6 +9,7 @@ public class AssMuscle : Muscle
 
     private void Awake()
     {
+        TypeMuscle = MuscleTypes.Ass;
         if (!IsCalled)
         {
             AddMuscles(SetMusclesInList<AssMuscle>(gameObject.transform.parent.transform.parent.gameObject));
@@ -21,7 +22,6 @@ public class AssMuscle : Muscle
     {
         ZoomSystem.Zoom(ZoomableGO);
         IsZoom = true;
-        Multiplier = 1;
     }
 
     protected override void MuscleLevelUp(int muscleLevel, List<MuscleItems> list)
@@ -38,5 +38,6 @@ public class AssMuscle : Muscle
                 }
             }
         }
+        ZoomSystem.Detach();
     }
 }

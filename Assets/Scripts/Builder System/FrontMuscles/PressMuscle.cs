@@ -9,6 +9,7 @@ public class PressMuscle : Muscle
 
     private void Awake()
     {
+        TypeMuscle = MuscleTypes.Press;
         if (!IsCalled)
         {
             AddMuscles(SetMusclesInList<PressMuscle>(gameObject.transform.parent.transform.parent.gameObject));
@@ -21,7 +22,6 @@ public class PressMuscle : Muscle
     {
         ZoomSystem.Zoom(ZoomableGO);
         IsZoom = true;
-        Multiplier = 1;
     }
 
     protected override void MuscleLevelUp(int muscleLevel, List<MuscleItems> list)
@@ -38,5 +38,6 @@ public class PressMuscle : Muscle
                 }
             }
         }
+        ZoomSystem.Detach();
     }
 }

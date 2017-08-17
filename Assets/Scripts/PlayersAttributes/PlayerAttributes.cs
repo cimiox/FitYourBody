@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,24 +12,32 @@ public class PlayerAttributes : MonoBehaviour
     public delegate void MoneyChanged();
     public static event MoneyChanged OnMoneyChanged;
 
-    private static double money;
+    private static double money = -1;
     public static double Money
     {
-        get { return money; }
+        get
+        {
+            return money = money == -1 ? PlayerPrefs.GetFloat("PlayerMoney", 0) : money;
+        }
         set
         {
             money = value;
+            PlayerPrefs.SetFloat("PlayerMoney", Convert.ToSingle(value));
             OnMoneyChanged();
         }
     }
 
-    private static int level = 1;
+    private static int level;
     public static int Level
     {
-        get { return level; }
+        get
+        {
+            return level = level == 0 ? PlayerPrefs.GetInt("PlayerLevel", 1) : level;
+        }
         set
         {
             level = value;
+            PlayerPrefs.SetInt("PlayerLevel", value);
             OnLevelChanged();
         }
     }
@@ -39,6 +48,18 @@ public class PlayerAttributes : MonoBehaviour
     private void Awake()
     {
         OnLevelChanged += LevelChanged_OnLevelChanged;
+        Muscle.OnMuscleChanged += Muscle_OnMuscleChanged;
+    }
+
+    private void Muscle_OnMuscleChanged(Muscle.MuscleTypes type)
+    {
+        foreach (var item in Muscle.Muscles)
+        {
+            if (item.Muscle.TypeMuscle == type && item.MuscleGO.activeInHierarchy)
+            {
+                PlayerPrefs.SetInt(string.Format("{0}{1}", type.ToString(), "Muscle"), item.Muscle.MuscleLevel);
+            }
+        }
     }
 
     private void LevelChanged_OnLevelChanged()
@@ -95,6 +116,7 @@ public class PlayerAttributes : MonoBehaviour
 
     private float GetClicks(GameObject parentGO)
     {
+        
         float sum = 0;
         var childrensWithComponent = parentGO.GetComponentsInChildren<MuscleSystem>();
 
@@ -102,9 +124,7 @@ public class PlayerAttributes : MonoBehaviour
             return 0;
 
         foreach (var item in childrensWithComponent)
-        {
             sum += item.Clicks;
-        }
 
         return sum;
     }

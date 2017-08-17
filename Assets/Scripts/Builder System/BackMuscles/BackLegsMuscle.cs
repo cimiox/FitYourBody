@@ -9,6 +9,7 @@ public class BackLegsMuscle : Muscle
 
     private void Awake()
     {
+        TypeMuscle = MuscleTypes.LegsBack;
         if (!IsCalled)
         {
             AddMuscles(SetMusclesInList<BackLegsMuscle>(gameObject.transform.parent.transform.parent.gameObject));
@@ -21,7 +22,6 @@ public class BackLegsMuscle : Muscle
     {
         ZoomSystem.Zoom(ZoomableGO);
         IsZoom = true;
-        Multiplier = 1;
     }
 
     protected override void MuscleLevelUp(int muscleLevel, List<MuscleItems> list)
@@ -33,6 +33,7 @@ public class BackLegsMuscle : Muscle
                 item.MuscleGO.SetActive(item.Muscle.MuscleLevel == ++muscleLevel ? true : false);
             }
         }
+        ZoomSystem.Detach();
     }
 
     protected override List<MuscleItems> SetMusclesInList<T>(GameObject parent)

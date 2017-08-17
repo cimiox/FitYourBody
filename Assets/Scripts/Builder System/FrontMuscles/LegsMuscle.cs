@@ -3,15 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LegsMuscles : Muscle 
+public class LegsMuscle : Muscle
 {
     public static bool IsCalled { get; set; }
 
     private void Awake()
     {
+        TypeMuscle = MuscleTypes.LegsFront;
         if (!IsCalled)
         {
-            AddMuscles(SetMusclesInList<LegsMuscles>(gameObject.transform.parent.transform.parent.gameObject));
+            AddMuscles(SetMusclesInList<LegsMuscle>(transform.parent.transform.parent.gameObject));
 
             IsCalled = true;
         }
@@ -21,17 +22,22 @@ public class LegsMuscles : Muscle
     {
         ZoomSystem.Zoom(ZoomableGO);
         IsZoom = true;
-        Multiplier = 1;
     }
 
     protected override void MuscleLevelUp(int muscleLevel, List<MuscleItems> list)
     {
-        foreach(var item in list)
+        foreach (var item in list)
         {
-            if (item.Muscle is LegsMuscles)
+            if (item.Muscle is LegsMuscle)
             {
-                item.MuscleGO.SetActive(item.Muscle.MuscleLevel == ++muscleLevel ? true : false);
+                if (item.Muscle.MuscleLevel == (muscleLevel + 1))
+                {
+                    item.MuscleGO.SetActive(true);
+                    gameObject.SetActive(false);
+                    break;
+                }
             }
         }
+        ZoomSystem.Detach();
     }
 }

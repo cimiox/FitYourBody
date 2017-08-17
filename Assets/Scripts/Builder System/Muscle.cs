@@ -6,10 +6,25 @@ using UnityEngine;
 public abstract class Muscle : MonoBehaviour
 {
     public delegate void ChangingClicks(float count);
-    public event ChangingClicks ChangeClicks;
+    public event ChangingClicks OnClicksChanging;
+
+    public delegate void MuscleChanged(MuscleTypes type);
+    public static event MuscleChanged OnMuscleChanged;
 
     public static GameObject ZoomableGO { get; set; }
-    public static float Multiplier { get; set; }
+
+    private static int multiplier;
+    public static int Multiplier
+    {
+        get {
+            return multiplier = multiplier == 0 ? PlayerPrefs.GetInt("Multiplier", 1) : multiplier; }
+        set
+        {
+            multiplier = value;
+            PlayerPrefs.SetInt("Multiplier", value);
+        }
+    }
+
     public bool IsZoom { get; set; }
     public int MuscleLevel { get; set; } = 1;
 
@@ -22,12 +37,13 @@ public abstract class Muscle : MonoBehaviour
         }
         set
         {
-            if (ChangeClicks != null)
-                ChangeClicks(value - localClicks);
+            OnClicksChanging?.Invoke(value - localClicks);
 
             localClicks = value;
         }
     }
+
+    public MuscleTypes TypeMuscle { get; set; }
 
     public static List<MuscleItems> Muscles { get; set; } = new List<MuscleItems>();
 
@@ -41,7 +57,6 @@ public abstract class Muscle : MonoBehaviour
     protected virtual void OnMouseDown()
     {
         ZoomableGO = gameObject;
-
         if (!IsZoom)
         {
             Initialize();
@@ -51,7 +66,10 @@ public abstract class Muscle : MonoBehaviour
         LocalClicks += Convert.ToInt32(1 * Multiplier);
 
         if (localClicks >= GetMuscleExperience(MuscleLevel))
+        {
+            OnMuscleChanged?.Invoke(TypeMuscle);
             MuscleLevelUp(MuscleLevel, Muscles);
+        }
     }
 
     protected int GetMuscleExperience(int level)
@@ -63,8 +81,7 @@ public abstract class Muscle : MonoBehaviour
     {
         foreach (var item in list)
         {
-            //TODO:  Переделать под сохранение
-            if (item.Muscle.MuscleLevel != 1)
+            if (item.Muscle.MuscleLevel != PlayerPrefs.GetInt(string.Format("{0}{1}", TypeMuscle.ToString(), "Muscle"), 1))
             {
                 item.MuscleGO.SetActive(false);
             }
@@ -98,5 +115,18 @@ public abstract class Muscle : MonoBehaviour
             MuscleGO = muscleGO;
             Muscle = muscle;
         }
+    }
+
+    public enum MuscleTypes
+    {
+        Ass,
+        Chest,
+        LegsFront,
+        LegsBack,
+        HandsFront,
+        HandsBack,
+        Press,
+        Back,
+        
     }
 }

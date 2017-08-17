@@ -9,12 +9,12 @@ public class HandsMuscles : Muscle
 
     private void Awake()
     {
+        TypeMuscle = MuscleTypes.HandsFront;
         if (!IsCalled)
         {
             AddMuscles(SetMusclesInList<HandsMuscles>(gameObject.transform.parent.transform.parent.gameObject));
 
             IsCalled = true;
-            //TODO: change for player prefs
         }
     }
 
@@ -22,7 +22,6 @@ public class HandsMuscles : Muscle
     {
         ZoomSystem.Zoom(ZoomableGO);
         IsZoom = true;
-        Multiplier = 1;
     }
 
     protected override void MuscleLevelUp(int muscleLevel, List<MuscleItems> list)
@@ -34,6 +33,7 @@ public class HandsMuscles : Muscle
                 item.MuscleGO.SetActive(item.Muscle.MuscleLevel == (muscleLevel + 1) ? true : false);
             }
         }
+        ZoomSystem.Detach();
     }
 
     protected override List<MuscleItems> SetMusclesInList<T>(GameObject parent)

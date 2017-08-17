@@ -9,9 +9,11 @@ public class ChestMuscle : Muscle
 
     private void Awake()
     {
+        TypeMuscle = MuscleTypes.Chest;
+
         if (!IsCalled)
         {
-            AddMuscles(SetMusclesInList<ChestMuscle>(gameObject.transform.parent.transform.parent.gameObject));
+            AddMuscles(SetMusclesInList<ChestMuscle>(transform.parent.transform.parent.gameObject));
 
             IsCalled = true;
         }
@@ -21,7 +23,6 @@ public class ChestMuscle : Muscle
     {
         ZoomSystem.Zoom(ZoomableGO);
         IsZoom = true;
-        Multiplier = 1;
     }
 
     protected override void MuscleLevelUp(int muscleLevel, List<MuscleItems> list)
@@ -38,5 +39,6 @@ public class ChestMuscle : Muscle
                 }
             }
         }
+        ZoomSystem.Detach();
     }
 }
