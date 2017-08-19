@@ -14,10 +14,20 @@ public class Cell : MonoBehaviour
 
     private void Awake()
     {
+        Intialize();
+    }
+
+    public void Intialize()
+    {
         Name = gameObject.transform.GetChild(0).GetComponent<Text>();
         Sprite = gameObject.transform.GetChild(1).GetComponent<Image>();
         Description = gameObject.transform.GetChild(2).GetComponent<Text>();
         BuyBtn = gameObject.transform.GetChild(3).GetComponent<Button>();
+    }
+
+    private void Properties_OnBought()
+    {
+
     }
 
     public void Remove(List<Cell> cells)

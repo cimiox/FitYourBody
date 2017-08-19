@@ -127,6 +127,5 @@ public abstract class Muscle : MonoBehaviour
         HandsBack,
         Press,
         Back,
-        
     }
 }

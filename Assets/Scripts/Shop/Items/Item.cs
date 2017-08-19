@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Item
 {
+    public delegate void Bought();
+    public virtual event Bought OnBought;
+
     public int ID { get; set; }
     public string Name { get; set; }
     public string Image { get; set; }
@@ -21,7 +24,7 @@ public class Item
         Level = levelNeed;
     }
 
-    public bool Buy(Cell cell, IShop shop)
+    public virtual bool Buy(Cell cell, IShop shop)
     {
         if (PlayerAttributes.RemoveMoney(cell.Properties.Cost))
         {

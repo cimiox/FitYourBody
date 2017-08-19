@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SportNutritionItem : Item
 {
+    public override event Bought OnBought;
     public double Multiplier { get; set; }
     public float Time { get; set; }
 
@@ -11,6 +12,17 @@ public class SportNutritionItem : Item
         : base(id, name, cost, levelNeed)
     {
         Multiplier = multiplier;
-        Time = time; 
+        Time = time;
+    }
+
+    public override bool Buy(Cell cell, IShop shop)
+    {
+        if (base.Buy(cell, shop))
+        {
+            OnBought?.Invoke();
+            return true;
+        }
+        else
+            return false;
     }
 }
