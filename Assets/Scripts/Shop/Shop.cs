@@ -33,7 +33,7 @@ public abstract class Shop : MonoBehaviour
         for (int i = 0; i < items.Count; i++)
         {
             items[i].IsUnlock = PlayerAttributes.Level <= items[i].Level ? true : false;
-
+            
             cells.Add(CreateCell(items[i], shop, parent));
             cells[i].Properties = items[i];
         }
@@ -50,7 +50,7 @@ public abstract class Shop : MonoBehaviour
         cell.Sprite.sprite = item.Sprite;
         //cell.Description.text = type.Items[i].Multiplier.ToString();
         cell.Properties = item;
-
+        item.OnBought += BoughtHandler.Instance.BoughtHandler_OnBought;
         cell.BuyBtn.interactable = item.IsUnlock ? true : false;
         cell.BuyBtn.onClick.AddListener(() => item.Buy(cell, shop));
         cell.BuyBtn.GetComponentInChildren<Text>().text = string.Format("Buy({0})", item.Cost);

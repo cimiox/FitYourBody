@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Item
 {
-    public delegate void Bought();
+    public delegate void Bought(Item item);
     public virtual event Bought OnBought;
 
     public int ID { get; set; }
