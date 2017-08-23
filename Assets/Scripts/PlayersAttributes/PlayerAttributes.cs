@@ -23,7 +23,7 @@ public class PlayerAttributes : MonoBehaviour
         {
             money = value;
             PlayerPrefs.SetFloat("PlayerMoney", Convert.ToSingle(value));
-            OnMoneyChanged();
+            OnMoneyChanged?.Invoke();
         }
     }
 

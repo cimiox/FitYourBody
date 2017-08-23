@@ -19,10 +19,9 @@ public class SportNutritionItem : Item
     {
         if (base.Buy(cell, shop))
         {
-            OnBought?.Invoke(cell.Properties);
+            OnBought?.Invoke(this);
             return true;
         }
-        else
-            return false;
+        return false;
     }
 }
