@@ -47,7 +47,7 @@ public abstract class Shop : MonoBehaviour
         //TODO: Shop attributes
 
         cell.Name.text = item.Name;
-        cell.Sprite.sprite = item.Sprite;
+        cell.Sprite.sprite = item.Sprite();
         //cell.Description.text = type.Items[i].Multiplier.ToString();
         cell.Properties = item;
         item.OnBought += BoughtHandler.Instance.BoughtHandler_OnBought;

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BoughtHandler : MonoBehaviour
 {
@@ -29,10 +30,7 @@ public class BoughtHandler : MonoBehaviour
 
     public GameObject Boost
     {
-        get
-        {
-            return Resources.Load<GameObject>("Shop/Boost");
-        }
+        get { return Resources.Load<GameObject>("Shop/Boost"); }
     }
 
     public static List<Boost> Boosts { get; set; } = new List<Boost>();
@@ -53,27 +51,45 @@ public class BoughtHandler : MonoBehaviour
             {
                 Boosts = (List<Boost>)bf.Deserialize(file);
             }
+
+            foreach (var item in Boosts)
+            {
+                GameObject obj = Instantiate(Instance.Boost, Instance.transform);
+                obj.GetComponentInChildren<Image>().sprite = item.Properties.Sprite();
+
+                item.OnTickHandler += obj.GetComponentInChildren<TicksHandler>().CallTicks;
+            }
         }
     }
 
     public static void Save()
     {
-        BinaryFormatter bf = new BinaryFormatter();
-        using (FileStream file = File.Create(Application.persistentDataPath + "/Boosts.fyb"))
+        try
         {
-            bf.Serialize(file, Boosts);
+            BinaryFormatter bf = new BinaryFormatter();
+            using (FileStream file = File.Create(Application.persistentDataPath + "/Boosts.fyb"))
+            {
+                bf.Serialize(file, Boosts);
+            }
         }
+        catch (Exception ex)
+        {
+            print(ex.Message);
+        }
+        
     }
 
     public void BoughtHandler_OnBought(Item item)
     {
-        Boost boost = Instantiate(Boost, transform).GetComponent<Boost>();
-        boost.Properties = item;
-        boost.StartTime = DateTime.Now;
-        
-        boost.EndTime = DateTime.Now + TimeSpan.FromSeconds((item as SportNutritionItem).Time);
-        boost.CallTicks();
-        //TODO: boost.Image
-        Boosts.Add(boost);
+        GameObject obj = Instantiate(Boost, transform);
+        obj.GetComponentInChildren<Image>().sprite = item.Sprite();
+
+        Boost inst = new Boost();
+        inst.Properties = item;
+        inst.EndTime = DateTime.Now + TimeSpan.FromSeconds((item as SportNutritionItem).Time);
+        //inst.OnTickHandler += obj.GetComponentInChildren<TicksHandler>().CallTicks;
+        inst.NowTime = inst.EndTime - DateTime.Now;
+
+        Boosts.Add(inst);
     }
 }

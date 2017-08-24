@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+[System.Serializable]
 public class Item
 {
     public delegate void Bought(Item item);
@@ -14,7 +13,11 @@ public class Item
     public int Level { get; set; }
     public bool IsUnlock { get; set; }
     public bool IsBuyed { get; set; }
-    public Sprite Sprite { get { return Resources.Load<Sprite>(Image); } }
+
+    public Sprite Sprite()
+    {
+        return Resources.Load<Sprite>(Image);
+    }
 
     public Item(int id, string name, double cost, int levelNeed)
     {
