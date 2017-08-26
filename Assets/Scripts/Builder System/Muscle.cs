@@ -13,15 +13,15 @@ public abstract class Muscle : MonoBehaviour
 
     public static GameObject ZoomableGO { get; set; }
 
-    private static int multiplier;
-    public static int Multiplier
+    private static float multiplier;
+    public static float Multiplier
     {
         get {
-            return multiplier = multiplier == 0 ? PlayerPrefs.GetInt("Multiplier", 1) : multiplier; }
+            return multiplier = multiplier == 0f ? PlayerPrefs.GetFloat("Multiplier", 1f) : multiplier; }
         set
         {
             multiplier = value;
-            PlayerPrefs.SetInt("Multiplier", value);
+            PlayerPrefs.SetFloat("Multiplier", value);
         }
     }
 

@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -33,50 +30,37 @@ public class BoughtHandler : MonoBehaviour
         get { return Resources.Load<GameObject>("Shop/Boost"); }
     }
 
-    public static List<Boost> Boosts { get; set; } = new List<Boost>();
-
     public static readonly int MaxBoosts = 2;
 
     private void Start()
     {
-        Load();
-    }
-
-    public static void Load()
-    {
-        if (File.Exists(Application.persistentDataPath + "/Boosts.fyb"))
+        BoostDatabase.Load();
+        List<Boost> boostsToRemove = new List<Boost>();
+        foreach (var item in BoostDatabase.Boosts)
         {
-            BinaryFormatter bf = new BinaryFormatter();
-            using (FileStream file = File.Open(Application.persistentDataPath + "/Boosts.fyb", FileMode.Open))
-            {
-                Boosts = (List<Boost>)bf.Deserialize(file);
-            }
+            item.isFirstCall = true;
+            GameObject obj = Instantiate(Instance.Boost, Instance.transform);
 
-            foreach (var item in Boosts)
-            {
-                GameObject obj = Instantiate(Instance.Boost, Instance.transform);
-                obj.GetComponentInChildren<Image>().sprite = item.Properties.Sprite();
+            item.OnTickHandler += obj.GetComponentInChildren<TicksHandler>().CallTicks;
+            item.NowTime = (item.EndTime - DateTime.Now).TotalSeconds;
 
-                item.OnTickHandler += obj.GetComponentInChildren<TicksHandler>().CallTicks;
+            if (item.NowTime <= 0)
+            {
+                Destroy(obj);
+                boostsToRemove.Add(item);
+                continue;
             }
+            
+            obj.GetComponentInChildren<Image>().sprite = item.Properties.Sprite();
+            obj.GetComponentInChildren<Text>().text = Math.Truncate(item.NowTime).ToString();
         }
-    }
 
-    public static void Save()
-    {
-        try
+        foreach (var item in boostsToRemove)
         {
-            BinaryFormatter bf = new BinaryFormatter();
-            using (FileStream file = File.Create(Application.persistentDataPath + "/Boosts.fyb"))
-            {
-                bf.Serialize(file, Boosts);
-            }
+            BoostDatabase.Boosts.Remove(item);
         }
-        catch (Exception ex)
-        {
-            print(ex.Message);
-        }
-        
+
+        BoostDatabase.Save();
     }
 
     public void BoughtHandler_OnBought(Item item)
@@ -87,9 +71,9 @@ public class BoughtHandler : MonoBehaviour
         Boost inst = new Boost();
         inst.Properties = item;
         inst.EndTime = DateTime.Now + TimeSpan.FromSeconds((item as SportNutritionItem).Time);
-        //inst.OnTickHandler += obj.GetComponentInChildren<TicksHandler>().CallTicks;
-        inst.NowTime = inst.EndTime - DateTime.Now;
+        inst.OnTickHandler += obj.GetComponentInChildren<TicksHandler>().CallTicks;
+        inst.NowTime = (inst.EndTime - DateTime.Now).TotalSeconds;
 
-        Boosts.Add(inst);
+        BoostDatabase.Boosts.Add(inst);
     }
 }

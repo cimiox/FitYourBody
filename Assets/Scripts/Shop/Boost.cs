@@ -1,20 +1,19 @@
 ﻿using System;
 using UnityEngine;
 
-[Serializable]
 public class Boost
 {
     public delegate void TickHandler(Boost boost);
     public event TickHandler OnTickHandler;
 
-    private bool isFirstCall = true;
+    public bool isFirstCall = true;
 
     public Item Properties { get; set; }
     [SerializeField]
-    private TimeSpan nowTime;
-    public TimeSpan NowTime
+    private double nowTime;
+    public double NowTime
     {
-        get { return nowTime; }
+        get { return Math.Truncate(nowTime); }
         set
         {
             if (isFirstCall)
@@ -23,8 +22,13 @@ public class Boost
                 OnTickHandler?.Invoke(this);
             }
             nowTime = value;
-            BoughtHandler.Save();
+            BoostDatabase.Save();
         }
     }
     public DateTime EndTime { get; set; }
+
+    public Boost()
+    {
+        Muscle.Multiplier += (Properties as SportNutritionItem).Multiplier;
+    }
 }

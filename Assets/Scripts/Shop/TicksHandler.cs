@@ -22,8 +22,15 @@ public class TicksHandler : MonoBehaviour
     {
         while (true)
         {
-            boost.NowTime =  boost.EndTime - DateTime.Now;
-            Text.text = boost.NowTime.ToString("m\\:f");
+            boost.NowTime = (boost.EndTime - DateTime.Now).TotalSeconds;
+
+            if (boost.NowTime <= 0)
+            {
+                Destroy(gameObject);
+                BoostDatabase.Boosts.Remove(boost);
+            }
+
+            Text.text = boost.NowTime.ToString();
             yield return new WaitForSeconds(1f);
         }
     }

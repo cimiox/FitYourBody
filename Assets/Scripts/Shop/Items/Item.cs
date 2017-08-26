@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 
-[System.Serializable]
 public class Item
 {
     public delegate void Bought(Item item);

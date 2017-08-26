@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,7 +16,7 @@ public class PlayerAttributes : MonoBehaviour
     {
         get
         {
-            return money = money == -1 ? PlayerPrefs.GetFloat("PlayerMoney", 0) : money;
+            return money = money == -1 ? PlayerPrefs.GetFloat("PlayerMoney", 20000) : money;
         }
         set
         {
