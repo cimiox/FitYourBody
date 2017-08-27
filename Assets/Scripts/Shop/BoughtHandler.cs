@@ -73,7 +73,6 @@ public class BoughtHandler : MonoBehaviour
         inst.EndTime = DateTime.Now + TimeSpan.FromSeconds((item as SportNutritionItem).Time);
         inst.OnTickHandler += obj.GetComponentInChildren<TicksHandler>().CallTicks;
         inst.NowTime = (inst.EndTime - DateTime.Now).TotalSeconds;
-
         BoostDatabase.Boosts.Add(inst);
     }
 }

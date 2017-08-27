@@ -13,20 +13,13 @@
 
     public override bool Buy(Cell cell, IShop shop)
     {
-        if (BoostDatabase.Boosts.Count < BoughtHandler.MaxBoosts)
+        if (PlayerAttributes.RemoveMoney(cell.Properties.Cost) && (BoostDatabase.Boosts.Count < BoughtHandler.MaxBoosts))
         {
-            if (base.Buy(cell, shop))
-            {
-                OnBought?.Invoke(this);
-                return true;
-            }
+            OnBought?.Invoke(this);
+            return true;
+        }
 
-            return false;
-        }
-        else
-        {
-            //TODO: message
-            return false;
-        }
+        //TODO: message
+        return false;
     }
 }
