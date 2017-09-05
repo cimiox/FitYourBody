@@ -29,6 +29,13 @@ public class Boost
 
     public Boost()
     {
-        Muscle.Multiplier += (Properties as SportNutritionItem).Multiplier;
+        if (Properties != null)
+            Muscle.Multiplier += (Properties as SportNutritionItem).Multiplier;
+    }
+
+    ~Boost()
+    {
+        if (Properties != null)
+            Muscle.Multiplier -= (Properties as SportNutritionItem).Multiplier;
     }
 }
