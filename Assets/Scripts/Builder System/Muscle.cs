@@ -16,8 +16,10 @@ public abstract class Muscle : MonoBehaviour
     private static float multiplier;
     public static float Multiplier
     {
-        get {
-            return multiplier = multiplier == 0f ? PlayerPrefs.GetFloat("Multiplier", 1f) : multiplier; }
+        get
+        {
+            return multiplier = multiplier == 0f ? PlayerPrefs.GetFloat("Multiplier", 1f) : multiplier;
+        }
         set
         {
             multiplier = value;
@@ -25,6 +27,7 @@ public abstract class Muscle : MonoBehaviour
         }
     }
 
+    public bool IsEnemy { get; set; }
     public bool IsZoom { get; set; }
     public int MuscleLevel { get; set; } = 1;
 
@@ -56,19 +59,22 @@ public abstract class Muscle : MonoBehaviour
 
     protected virtual void OnMouseDown()
     {
-        ZoomableGO = gameObject;
-        if (!IsZoom)
+        if (IsEnemy)
         {
-            Initialize();
-            return;
-        }
+            ZoomableGO = gameObject;
+            if (!IsZoom)
+            {
+                Initialize();
+                return;
+            }
 
-        LocalClicks += Convert.ToInt32(1 * Multiplier);
+            LocalClicks += Convert.ToInt32(1 * Multiplier);
 
-        if (localClicks >= GetMuscleExperience(MuscleLevel))
-        {
-            OnMuscleChanged?.Invoke(TypeMuscle);
-            MuscleLevelUp(MuscleLevel, Muscles);
+            if (localClicks >= GetMuscleExperience(MuscleLevel))
+            {
+                OnMuscleChanged?.Invoke(TypeMuscle);
+                MuscleLevelUp(MuscleLevel, Muscles);
+            }
         }
     }
 
