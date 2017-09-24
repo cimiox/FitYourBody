@@ -7,14 +7,19 @@ public class HandsMuscles : Muscle
 {
     public static bool IsCalled { get; set; }
 
-    private void Awake()
+    public override void Awake()
     {
+        IsDouble = true;
         TypeMuscle = MuscleTypes.HandsFront;
-        if (!IsCalled)
-        {
-            AddMuscles(SetMusclesInList<HandsMuscles>(gameObject.transform.parent.transform.parent.gameObject));
 
-            IsCalled = true;
+        if (!IsEnemy)
+        {
+            if (!IsCalled)
+            {
+                AddMuscles(SetMusclesInList<HandsMuscles>(gameObject.transform.parent.transform.parent.gameObject));
+
+                IsCalled = true;
+            }
         }
     }
 
@@ -24,7 +29,7 @@ public class HandsMuscles : Muscle
         IsZoom = true;
     }
 
-    protected override void MuscleLevelUp(int muscleLevel, List<MuscleItems> list)
+    protected override void MuscleLevelUp(int muscleLevel, List<MuscleItem> list)
     {
         foreach (var item in list)
         {
@@ -36,9 +41,9 @@ public class HandsMuscles : Muscle
         ZoomSystem.Detach();
     }
 
-    protected override List<MuscleItems> SetMusclesInList<T>(GameObject parent)
+    protected override List<MuscleItem> SetMusclesInList<T>(GameObject parent)
     {
-        var muscles = new List<MuscleItems>();
+        var muscles = new List<MuscleItem>();
 
         int muscleLevel = 0;
 
@@ -49,7 +54,7 @@ public class HandsMuscles : Muscle
             else
                 parent.GetComponentsInChildren<T>()[i].MuscleLevel = ++muscleLevel;
 
-            muscles.Add(new MuscleItems(parent.GetComponentsInChildren<T>()[i].gameObject, parent.GetComponentsInChildren<T>()[i]));
+            muscles.Add(new MuscleItem(parent.GetComponentsInChildren<T>()[i].gameObject, parent.GetComponentsInChildren<T>()[i]));
         }
 
         return muscles;

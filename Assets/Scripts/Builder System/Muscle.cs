@@ -27,9 +27,14 @@ public abstract class Muscle : MonoBehaviour
         }
     }
 
-    public bool IsEnemy { get; set; }
+    private bool isEnemy;
+    public bool IsEnemy
+    {
+        get { return isEnemy = transform.parent.parent.GetComponentInParent<Enemy>() == null ? isEnemy = false : isEnemy = true; }
+    }
+
     public bool IsZoom { get; set; }
-    public int MuscleLevel { get; set; } = 1;
+    public int MuscleLevel { get; set; }
 
     private float localClicks;
     public float LocalClicks
@@ -46,20 +51,21 @@ public abstract class Muscle : MonoBehaviour
         }
     }
 
+    public bool IsDouble { get; set; }
     public MuscleTypes TypeMuscle { get; set; }
-
-    public static List<MuscleItems> Muscles { get; set; } = new List<MuscleItems>();
 
     private int[] MuscleExperience = new int[10]
     {5, 10, 15, 20, 5000000, 29000, 35000, 43000, 47000, 55000};
 
-
+    public virtual void Awake()
+    {
+    }
     protected abstract void Initialize();
-    protected abstract void MuscleLevelUp(int muscleLevel, List<MuscleItems> list);
+    protected abstract void MuscleLevelUp(int muscleLevel, List<MuscleItem> list);
 
     protected virtual void OnMouseDown()
     {
-        if (IsEnemy)
+        if (!IsEnemy)
         {
             ZoomableGO = gameObject;
             if (!IsZoom)
@@ -73,7 +79,7 @@ public abstract class Muscle : MonoBehaviour
             if (localClicks >= GetMuscleExperience(MuscleLevel))
             {
                 OnMuscleChanged?.Invoke(TypeMuscle);
-                MuscleLevelUp(MuscleLevel, Muscles);
+                MuscleLevelUp(MuscleLevel, PlayerAttributes.Muscles);
             }
         }
     }
@@ -83,7 +89,7 @@ public abstract class Muscle : MonoBehaviour
         return MuscleExperience[level - 1];
     }
 
-    protected void AddMuscles(List<MuscleItems> list)
+    protected void AddMuscles(List<MuscleItem> list)
     {
         foreach (var item in list)
         {
@@ -92,35 +98,23 @@ public abstract class Muscle : MonoBehaviour
                 item.MuscleGO.SetActive(false);
             }
 
-            Muscles.Add(new MuscleItems(item.MuscleGO, item.Muscle));
+            PlayerAttributes.Muscles.Add(new MuscleItem(item.MuscleGO, item.Muscle));
         }
     }
 
-    protected virtual List<MuscleItems> SetMusclesInList<T>(GameObject parent) where T : Muscle
+    protected virtual List<MuscleItem> SetMusclesInList<T>(GameObject parent) where T : Muscle
     {
-        var muscles = new List<MuscleItems>();
+        var muscles = new List<MuscleItem>();
 
         int muscleLevel = 0;
 
         foreach (var item in parent.GetComponentsInChildren<T>())
         {
             item.MuscleLevel = ++muscleLevel;
-            muscles.Add(new MuscleItems(item.gameObject, item));
+            muscles.Add(new MuscleItem(item.gameObject, item));
         }
 
         return muscles;
-    }
-
-    public struct MuscleItems
-    {
-        public GameObject MuscleGO { get; set; }
-        public Muscle Muscle { get; set; }
-
-        public MuscleItems(GameObject muscleGO, Muscle muscle)
-        {
-            MuscleGO = muscleGO;
-            Muscle = muscle;
-        }
     }
 
     public enum MuscleTypes

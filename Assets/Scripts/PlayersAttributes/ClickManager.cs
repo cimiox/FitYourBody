@@ -17,9 +17,9 @@ public class ClickManager : MonoBehaviour
     }
     private void Start()
     {
-        for (int i = 0; i < Muscle.Muscles.Count; i++)
+        for (int i = 0; i < PlayerAttributes.Muscles.Count; i++)
         {
-            Muscle.Muscles[i].Muscle.OnClicksChanging += player.GetComponent<PlayerAttributes>().Muscle_ChangeClicks;
+            PlayerAttributes.Muscles[i].Muscle.OnClicksChanging += player.GetComponent<PlayerAttributes>().Muscle_ChangeClicks;
         }
     }
     

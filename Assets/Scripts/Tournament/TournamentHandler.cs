@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -11,8 +10,14 @@ public class TournamentHandler : MonoBehaviour
     public int PlayerScores { get; set; } = 0;
 
     private readonly int MaxEnemies = 2;
+    private readonly int MaxMuscleLevel = 5;
 
     private void Start()
+    {
+        Screen.orientation = ScreenOrientation.Landscape;
+    }
+
+    private void OnEnable()
     {
         Screen.orientation = ScreenOrientation.Landscape;
     }
@@ -30,13 +35,23 @@ public class TournamentHandler : MonoBehaviour
     public void Initialize()
     {
         PlayerScores = 0;
+        Enemies.Clear();
+
         for (int i = 0; i < MaxEnemies; i++)
         {
-            Enemies[i] = new Enemy();
+            Enemies.Add(new Enemy());
 
             Enemies[i].MuscleLevels = GetEnemyMusclesLevels(Enemies[i]);
-
+            
             Enemies[i].EnemyGO = transform.Find(string.Format("Enemy[{0}]", i)).gameObject;
+        }
+
+        GetScores();
+
+        print(PlayerScores);
+        for (int i = 0; i < Enemies.Count; i++)
+        {
+            print(Enemies[i].Scores);
         }
     }
 
@@ -51,7 +66,7 @@ public class TournamentHandler : MonoBehaviour
                 musclesForComparison.Add(Enemies[i].Muscles.Where(x => x.TypeMuscle.ToString() == item).First());
             }
 
-            SetScores(musclesForComparison, Muscle.Muscles
+            SetScores(musclesForComparison, PlayerAttributes.Muscles
                .Where(x => x.MuscleGO.activeSelf)
                .Where(x => x.Muscle.TypeMuscle.ToString() == item)
                .First().Muscle);
@@ -121,13 +136,16 @@ public class TournamentHandler : MonoBehaviour
         }
     }
 
-    private int[] GetEnemyMusclesLevels(Enemy enemy)
+    private Dictionary<Muscle.MuscleTypes, int> GetEnemyMusclesLevels(Enemy enemy)
     {
-        var playerMaxMuscleLevel = Muscle.Muscles.Max(x => x.Muscle.MuscleLevel);
+        var playerMaxMuscleLevel = PlayerAttributes.Muscles.Max(x => x.Muscle.MuscleLevel);
+        var muscleTypes = Enum.GetNames(typeof(Muscle.MuscleTypes));
 
-        for (int j = 0; j < enemy.MuscleLevels.Length; j++)
+        foreach (var item in muscleTypes)
         {
-            enemy.MuscleLevels[j] = GetEnemyMuscleLevel(playerMaxMuscleLevel);
+            enemy.MuscleLevels.Add(
+                (Muscle.MuscleTypes)Enum.Parse(typeof(Muscle.MuscleTypes), item),
+                GetEnemyMuscleLevel(playerMaxMuscleLevel));
         }
 
         return enemy.MuscleLevels;
@@ -135,89 +153,7 @@ public class TournamentHandler : MonoBehaviour
 
     private int GetEnemyMuscleLevel(int playerMaxMuscleLevel)
     {
-        int level = UnityEngine.Random.Range(playerMaxMuscleLevel - 2, playerMaxMuscleLevel + 2);
-        return level <= 0 ? 1 : level;
-    }
-
-    public class Enemy
-    {
-        public int[] MuscleLevels { get; set; } = new int[8];
-        public List<Muscle> Muscles { get; set; } = new List<Muscle>();
-        public int Scores { get; set; }
-        private GameObject enemyGO;
-        public GameObject EnemyGO
-        {
-            get { return enemyGO; }
-            set
-            {
-                enemyGO = value;
-
-                if (MuscleLevels.Min() >= 1)
-                    SetMuscles();
-            }
-        }
-
-        private void SetMuscles()
-        {
-            var muscles = EnemyGO.GetComponentsInChildren<Muscle>();
-
-            for (int i = 0; i < muscles.Length; i++)
-            {
-                muscles[i].IsEnemy = true;
-                switch (muscles[i].TypeMuscle)
-                {
-                    case Muscle.MuscleTypes.Ass:
-                        if (muscles[i].MuscleLevel != MuscleLevels[0])
-                            muscles[i].gameObject.SetActive(false);
-                        else
-                            Muscles.Add(muscles[i]);
-                        break;
-                    case Muscle.MuscleTypes.Chest:
-                        if (muscles[i].MuscleLevel != MuscleLevels[1])
-                            muscles[i].gameObject.SetActive(false);
-                        else
-                            Muscles.Add(muscles[i]);
-                        break;
-                    case Muscle.MuscleTypes.LegsFront:
-                        if (muscles[i].MuscleLevel != MuscleLevels[2])
-                            muscles[i].gameObject.SetActive(false);
-                        else
-                            Muscles.Add(muscles[i]);
-                        break;
-                    case Muscle.MuscleTypes.LegsBack:
-                        if (muscles[i].MuscleLevel != MuscleLevels[3])
-                            muscles[i].gameObject.SetActive(false);
-                        else
-                            Muscles.Add(muscles[i]);
-                        break;
-                    case Muscle.MuscleTypes.HandsFront:
-                        if (muscles[i].MuscleLevel != MuscleLevels[4])
-                            muscles[i].gameObject.SetActive(false);
-                        else
-                            Muscles.Add(muscles[i]);
-                        break;
-                    case Muscle.MuscleTypes.HandsBack:
-                        if (muscles[i].MuscleLevel != MuscleLevels[5])
-                            muscles[i].gameObject.SetActive(false);
-                        else
-                            Muscles.Add(muscles[i]);
-                        break;
-                    case Muscle.MuscleTypes.Press:
-                        if (muscles[i].MuscleLevel != MuscleLevels[6])
-                            muscles[i].gameObject.SetActive(false);
-                        else
-                            Muscles.Add(muscles[i]);
-                        break;
-                    case Muscle.MuscleTypes.Back:
-                        if (muscles[i].MuscleLevel != MuscleLevels[7])
-                            muscles[i].gameObject.SetActive(false);
-                        else
-                            Muscles.Add(muscles[i]);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
+        int level = new System.Random().Next(playerMaxMuscleLevel - 3, playerMaxMuscleLevel + 3);
+        return level <= 0 ? 1 : (level > MaxMuscleLevel ? 5 : level);
     }
 }

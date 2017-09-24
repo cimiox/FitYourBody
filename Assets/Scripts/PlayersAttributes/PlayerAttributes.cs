@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -41,6 +42,7 @@ public class PlayerAttributes : MonoBehaviour
         }
     }
 
+    public static List<MuscleItem> Muscles { get; set; } = new List<MuscleItem>();
     public static float NowExperience { get; set; }
     private readonly float StartExp = 150;
 
@@ -52,7 +54,7 @@ public class PlayerAttributes : MonoBehaviour
 
     private void Muscle_OnMuscleChanged(Muscle.MuscleTypes type)
     {
-        foreach (var item in Muscle.Muscles)
+        foreach (var item in Muscles)
         {
             if (item.Muscle.TypeMuscle == type && item.MuscleGO.activeInHierarchy)
             {
@@ -115,7 +117,6 @@ public class PlayerAttributes : MonoBehaviour
 
     private float GetClicks(GameObject parentGO)
     {
-        
         float sum = 0;
         var childrensWithComponent = parentGO.GetComponentsInChildren<MuscleSystem>();
 

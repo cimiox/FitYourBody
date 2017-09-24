@@ -7,14 +7,18 @@ public class LegsMuscle : Muscle
 {
     public static bool IsCalled { get; set; }
 
-    private void Awake()
+    public override void Awake()
     {
         TypeMuscle = MuscleTypes.LegsFront;
-        if (!IsCalled)
-        {
-            AddMuscles(SetMusclesInList<LegsMuscle>(transform.parent.transform.parent.gameObject));
 
-            IsCalled = true;
+        if (!IsEnemy)
+        {
+            if (!IsCalled)
+            {
+                AddMuscles(SetMusclesInList<LegsMuscle>(gameObject.transform.parent.transform.parent.gameObject));
+
+                IsCalled = true;
+            }
         }
     }
 
@@ -24,7 +28,7 @@ public class LegsMuscle : Muscle
         IsZoom = true;
     }
 
-    protected override void MuscleLevelUp(int muscleLevel, List<MuscleItems> list)
+    protected override void MuscleLevelUp(int muscleLevel, List<MuscleItem> list)
     {
         foreach (var item in list)
         {
