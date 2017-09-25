@@ -57,13 +57,17 @@ public class Enemy : MonoBehaviour
                     break;
             }
 
-            Muscles.Add(muscles[i]);
+            
         }
 
-        for (int i = 0; i < Muscles.Count; i++)
+        for (int i = 0; i < muscles.Length; i++)
         {
-            ActivateMuscle(Muscles[i]);
+            ActivateMuscle(muscles[i]);
+            if (muscles[i].gameObject.activeSelf)
+                Muscles.Add(muscles[i]);
         }
+
+        EnemyGO.transform.Find("Enemy_Back").gameObject.SetActive(false);
     }
 
     private void ActivateMuscle(Muscle muscle)
