@@ -36,6 +36,7 @@ public class BoughtHandler : MonoBehaviour
     {
         BoostDatabase.Load();
         List<Boost> boostsToRemove = new List<Boost>();
+
         foreach (var item in BoostDatabase.Boosts)
         {
             item.isFirstCall = true;

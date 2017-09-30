@@ -7,23 +7,21 @@ public class TournamentHandler : MonoBehaviour
 {
     public List<Enemy> Enemies { get; set; } = new List<Enemy>();
 
-    public int PlayerScores { get; set; } = 0;
+    public int PlayerScores { get; set; }
+    public static bool IsTournamentStart { get; set; }
 
     private readonly int MaxEnemies = 2;
-    private readonly int MaxMuscleLevel = 5;
-
-    private void Start()
-    {
-        Screen.orientation = ScreenOrientation.Landscape;
-    }
+    private readonly static int MaxMuscleLevel = 5;
 
     private void OnEnable()
     {
+        IsTournamentStart = true;
         Screen.orientation = ScreenOrientation.Landscape;
     }
 
     private void OnDisable()
     {
+        IsTournamentStart = false;
         Screen.orientation = ScreenOrientation.Portrait;
     }
 
@@ -35,15 +33,12 @@ public class TournamentHandler : MonoBehaviour
     public void Initialize()
     {
         PlayerScores = 0;
+        Enemies.ForEach(x => x.Dispose());
         Enemies.Clear();
 
         for (int i = 0; i < MaxEnemies; i++)
         {
             Enemies.Add(new Enemy());
-
-            Enemies[i].MuscleLevels = GetEnemyMusclesLevels(Enemies[i]);
-            
-            Enemies[i].EnemyGO = transform.Find(string.Format("Enemy[{0}]", i)).gameObject;
         }
 
         GetScores();
@@ -136,7 +131,7 @@ public class TournamentHandler : MonoBehaviour
         }
     }
 
-    private Dictionary<Muscle.MuscleTypes, int> GetEnemyMusclesLevels(Enemy enemy)
+    public static Dictionary<Muscle.MuscleTypes, int> GetEnemyMusclesLevels(Enemy enemy)
     {
         var playerMaxMuscleLevel = PlayerAttributes.Muscles.Max(x => x.Muscle.MuscleLevel);
         var muscleTypes = Enum.GetNames(typeof(Muscle.MuscleTypes));
@@ -151,7 +146,7 @@ public class TournamentHandler : MonoBehaviour
         return enemy.MuscleLevels;
     }
 
-    private int GetEnemyMuscleLevel(int playerMaxMuscleLevel)
+    private static int GetEnemyMuscleLevel(int playerMaxMuscleLevel)
     {
         int level = new System.Random().Next(playerMaxMuscleLevel - 3, playerMaxMuscleLevel + 3);
         return level <= 0 ? 1 : (level > MaxMuscleLevel ? 5 : level);

@@ -67,19 +67,22 @@ public abstract class Muscle : MonoBehaviour
     {
         if (!IsEnemy)
         {
-            ZoomableGO = gameObject;
-            if (!IsZoom)
+            if (!TournamentHandler.IsTournamentStart)
             {
-                Initialize();
-                return;
-            }
+                ZoomableGO = gameObject;
+                if (!IsZoom)
+                {
+                    Initialize();
+                    return;
+                }
 
-            LocalClicks += Convert.ToInt32(1 * Multiplier);
+                LocalClicks += Convert.ToInt32(1 * Multiplier);
 
-            if (localClicks >= GetMuscleExperience(MuscleLevel))
-            {
-                OnMuscleChanged?.Invoke(TypeMuscle);
-                MuscleLevelUp(MuscleLevel, PlayerAttributes.Muscles);
+                if (localClicks >= GetMuscleExperience(MuscleLevel))
+                {
+                    OnMuscleChanged?.Invoke(TypeMuscle);
+                    MuscleLevelUp(MuscleLevel, PlayerAttributes.Muscles);
+                }
             }
         }
     }

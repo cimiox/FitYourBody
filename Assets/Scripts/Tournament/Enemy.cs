@@ -1,23 +1,29 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IDisposable
 {
     public Dictionary<Muscle.MuscleTypes, int> MuscleLevels = new Dictionary<Muscle.MuscleTypes, int>();
-    public List<Muscle> Muscles { get; set; } = new List<Muscle>();
+    
     public int Scores { get; set; }
-    private GameObject enemyGO;
-    public GameObject EnemyGO
-    {
-        get { return enemyGO; }
-        set
-        {
-            enemyGO = value;
+    private readonly string EnemyPath = "Tournament/Enemy";
 
-            SetMuscles();
-        }
+    public GameObject EnemyGO { get; set; }
+    public List<Muscle> Muscles { get; set; } = new List<Muscle>();
+
+    public Enemy()
+    {
+        GameObject tournament = GameObject.Find("Tournament");
+
+        EnemyGO = Instantiate(Resources.Load<GameObject>(EnemyPath), tournament.transform);
+        EnemyGO.name = string.Format("Enemt[{0}]", tournament.transform.childCount);
+
+        MuscleLevels = TournamentHandler.GetEnemyMusclesLevels(this);
+
+        SetMuscles();
     }
 
     private void SetMuscles()
@@ -56,8 +62,6 @@ public class Enemy : MonoBehaviour
                     muscles[i].MuscleLevel = GetMuscleLevel<BackMuscle>(EnemyGO) + 1;
                     break;
             }
-
-            
         }
 
         for (int i = 0; i < muscles.Length; i++)
@@ -93,5 +97,13 @@ public class Enemy : MonoBehaviour
     private int GetMuscleLevel<T>(GameObject parent) where T : Muscle
     {
         return parent.GetComponentsInChildren<T>().Max(x => x.MuscleLevel);
+    }
+
+    public void Dispose()
+    {
+        EnemyGO.transform.Find("Enemy_Back").gameObject.SetActive(true);
+
+        EnemyGO.GetComponentsInChildren<Muscle>().ToList().ForEach(x => x.gameObject.SetActive(true));
+        GC.SuppressFinalize(this);
     }
 }
