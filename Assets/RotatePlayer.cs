@@ -9,6 +9,12 @@ public class RotatePlayer : MonoBehaviour
 
     private void Start()
     {
+        StartCoroutine(WaitMusclesSetted());
+    }
+
+    private IEnumerator WaitMusclesSetted()
+    {
+        yield return new WaitUntil(() => MuscleController.Muscles.Count > 0);
         PlayerBack.SetActive(false);
     }
 

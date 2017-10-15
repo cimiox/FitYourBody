@@ -1,87 +1,54 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public abstract class Muscle : MonoBehaviour
 {
     public delegate void ChangingClicks(float count);
-    public event ChangingClicks OnClicksChanging;
 
-    public delegate void MuscleChanged(MuscleTypes type);
+    public delegate void MuscleChanged(Muscle muscle);
     public static event MuscleChanged OnMuscleChanged;
-
-    public static GameObject ZoomableGO { get; set; }
-
-    private static float multiplier;
-    public static float Multiplier
-    {
-        get
-        {
-            return multiplier = multiplier == 0f ? PlayerPrefs.GetFloat("Multiplier", 1f) : multiplier;
-        }
-        set
-        {
-            multiplier = value;
-            PlayerPrefs.SetFloat("Multiplier", value);
-        }
-    }
 
     private bool isEnemy;
     public bool IsEnemy
     {
-        get { return isEnemy = transform.parent.parent.GetComponentInParent<Enemy>() == null ? isEnemy = false : isEnemy = true; }
+        get { return isEnemy =
+                transform.parent.parent.GetComponentInParent<Enemy>() == null ? isEnemy = false : isEnemy = true; }
     }
 
     public bool IsZoom { get; set; }
-    public int MuscleLevel { get; set; }
-
-    private float localClicks;
-    public float LocalClicks
-    {
-        get
-        {
-            return localClicks;
-        }
-        set
-        {
-            OnClicksChanging?.Invoke(value - localClicks);
-
-            localClicks = value;
-        }
-    }
-
     public bool IsDouble { get; set; }
-    public MuscleTypes TypeMuscle { get; set; }
+    public Attributes Properties { get; set; }
 
-    private int[] MuscleExperience = new int[10]
-    {5, 10, 15, 20, 5000000, 29000, 35000, 43000, 47000, 55000};
-
-    public virtual void Awake()
+    protected virtual void Initialize()
     {
+        ZoomSystem.Zoom(PlayerAttributes.ZoomableGO);
+        IsZoom = true;
     }
-    protected abstract void Initialize();
-    protected abstract void MuscleLevelUp(int muscleLevel, List<MuscleItem> list);
 
     protected virtual void OnMouseDown()
     {
-        if (!IsEnemy)
+        if (!EventSystem.current.IsPointerOverGameObject())
         {
-            if (!TournamentHandler.IsTournamentStart)
+            if (!IsEnemy)
             {
-                ZoomableGO = gameObject;
-                if (!IsZoom)
+                if (!TournamentHandler.IsTournamentStart)
                 {
-                    Initialize();
-                    return;
-                }
+                    PlayerAttributes.ZoomableGO = gameObject;
+                    if (!IsZoom)
+                    {
+                        Initialize();
+                        return;
+                    }
 
-                LocalClicks += Convert.ToInt32(1 * Multiplier);
+                    Properties.LocalClicks += Convert.ToInt32(1 * PlayerAttributes.PlayerProperties.Multiplier);
 
-                if (localClicks >= GetMuscleExperience(MuscleLevel))
-                {
-                    OnMuscleChanged?.Invoke(TypeMuscle);
-                    MuscleLevelUp(MuscleLevel, PlayerAttributes.Muscles);
+                    if (Properties.LocalClicks >= GetMuscleExperience(Properties.MuscleLevel))
+                    {
+                        OnMuscleChanged?.Invoke(MuscleController.MuscleLevelUp(this));
+                    }
                 }
             }
         }
@@ -89,35 +56,88 @@ public abstract class Muscle : MonoBehaviour
 
     protected int GetMuscleExperience(int level)
     {
-        return MuscleExperience[level - 1];
+        return PlayerAttributes.MuscleExperience[level - 1];
     }
 
-    protected void AddMuscles(List<MuscleItem> list)
+    protected int GetParentLevel(Muscle muscle)
     {
-        foreach (var item in list)
+        return Convert.ToInt32(muscle.transform.parent.name.Split('_')[1]);
+    }
+
+    protected float GetLocalClicks(Attributes attributes)
+    {
+        var value = PlayerAttributes.PlayerProperties
+            .Muscles
+            .First(x => x.Key == attributes.TypeMuscle)
+            .Value;
+        return attributes.MuscleLevel == value.MuscleLevel ? value.LocalClicks : 0;
+    }
+
+    protected Attributes SetAttributes(MuscleTypes type)
+    {
+        if (!IsEnemy)
         {
-            if (item.Muscle.MuscleLevel != PlayerPrefs.GetInt(string.Format("{0}{1}", TypeMuscle.ToString(), "Muscle"), 1))
+            var attributes = new Attributes(type, GetParentLevel(this));
+            if (GetParentLevel(this) != PlayerAttributes.PlayerProperties.Muscles.First(x => x.Key == type).Value.MuscleLevel)
             {
-                item.MuscleGO.SetActive(false);
+                attributes.LocalClicks = GetLocalClicks(attributes);
+                return attributes;
             }
-
-            PlayerAttributes.Muscles.Add(new MuscleItem(item.MuscleGO, item.Muscle));
+            else
+                return PlayerAttributes.PlayerProperties.Muscles.First(x => x.Key == type).Value;
         }
+        //TODO write for enemy
+        return null;
     }
 
-    protected virtual List<MuscleItem> SetMusclesInList<T>(GameObject parent) where T : Muscle
+    public class Attributes
     {
-        var muscles = new List<MuscleItem>();
+        public event ChangingClicks OnClicksChanging;
 
-        int muscleLevel = 0;
-
-        foreach (var item in parent.GetComponentsInChildren<T>())
+        private float localClicks;
+        public float LocalClicks
         {
-            item.MuscleLevel = ++muscleLevel;
-            muscles.Add(new MuscleItem(item.gameObject, item));
+            get
+            {
+                return localClicks;
+            }
+            set
+            {
+                OnClicksChanging?.Invoke(value - localClicks);
+
+                localClicks = value;
+
+                if (PlayerAttributes.IsCanSave)
+                    SerializationSystem.Save(PlayerAttributes.PlayerProperties);
+            }
         }
 
-        return muscles;
+        public int MuscleLevel { get; set; } = 1;
+
+        public MuscleTypes TypeMuscle { get; set; }
+
+        public Attributes()
+        {
+
+        }
+
+        public Attributes(int muscleLevel)
+        {
+            MuscleLevel = muscleLevel;
+        }
+
+        public Attributes(MuscleTypes type, int muscleLevel)
+        {
+            TypeMuscle = type;
+            MuscleLevel = muscleLevel;
+        }
+
+        public Attributes(Attributes clone)
+        {
+            LocalClicks = clone.LocalClicks;
+            TypeMuscle = clone.TypeMuscle;
+            MuscleLevel = clone.MuscleLevel;
+        }
     }
 
     public enum MuscleTypes

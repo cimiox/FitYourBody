@@ -20,12 +20,12 @@ public class SportingGoods : NotDonate, IShop
 	
 		base.Inititalize<T>(type, thisGO);
 
-		PlayerAttributes.OnLevelChanged += LevelChanged_OnLevelChanged;
+		PlayerAttributes.Properties.OnLevelChanged += LevelChanged_OnLevelChanged;
 	}
 
 	private void LevelChanged_OnLevelChanged()
 	{
-		CountNotifications = GetNewItems(PlayerAttributes.Level, this);
+		CountNotifications = GetNewItems(PlayerAttributes.PlayerProperties.Level, this);
 	}
 
     protected override Cell CreateCell<T>(T item, IShop shop, Transform parent)

@@ -7,12 +7,12 @@ public class ChangeLevelText : MonoBehaviour
 {
     void Start()
     {
-        PlayerAttributes.OnLevelChanged += PlayerAttributes_OnLevelChanged;
-        GetComponent<Text>().text = string.Format("Level: {0}", PlayerAttributes.Level);
+        PlayerAttributes.Properties.OnLevelChanged += PlayerAttributes_OnLevelChanged;
+        GetComponent<Text>().text = string.Format("Level: {0}", PlayerAttributes.PlayerProperties.Level);
     }
 
     private void PlayerAttributes_OnLevelChanged()
     {
-        GetComponent<Text>().text = string.Format("Level: {0}", PlayerAttributes.Level);
+        GetComponent<Text>().text = string.Format("Level: {0}", PlayerAttributes.PlayerProperties.Level);
     }
 }

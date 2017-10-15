@@ -32,7 +32,7 @@ public abstract class Shop : MonoBehaviour
         List<Cell> cells = new List<Cell>();
         for (int i = 0; i < items.Count; i++)
         {
-            items[i].IsUnlock = PlayerAttributes.Level <= items[i].Level ? true : false;
+            items[i].IsUnlock = PlayerAttributes.PlayerProperties.Level <= items[i].Level ? true : false;
             
             cells.Add(CreateCell(items[i], shop, parent));
             cells[i].Properties = items[i];

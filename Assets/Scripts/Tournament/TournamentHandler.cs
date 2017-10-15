@@ -58,12 +58,12 @@ public class TournamentHandler : MonoBehaviour
 
             for (int i = 0; i < Enemies.Count; i++)
             {
-                musclesForComparison.Add(Enemies[i].Muscles.Where(x => x.TypeMuscle.ToString() == item).First());
+                musclesForComparison.Add(Enemies[i].Muscles.Where(x => x.Properties.TypeMuscle.ToString() == item).First());
             }
 
             SetScores(musclesForComparison, PlayerAttributes.Muscles
                .Where(x => x.MuscleGO.activeSelf)
-               .Where(x => x.Muscle.TypeMuscle.ToString() == item)
+               .Where(x => x.Muscle.Properties.TypeMuscle.ToString() == item)
                .First().Muscle);
 
             musclesForComparison.Clear();
@@ -72,21 +72,21 @@ public class TournamentHandler : MonoBehaviour
 
     private void SetScores(List<Muscle> musclesForComparison, Muscle playerMuscle)
     {
-        if (playerMuscle.MuscleLevel != 1)
+        if (playerMuscle.Properties.MuscleLevel != 1)
         {
-            var maxLevel = musclesForComparison.Max(x => x.MuscleLevel);
+            var maxLevel = musclesForComparison.Max(x => x.Properties.MuscleLevel);
 
-            if (playerMuscle.MuscleLevel > maxLevel)
+            if (playerMuscle.Properties.MuscleLevel > maxLevel)
             {
                 PlayerScores++;
             }
-            else if (playerMuscle.MuscleLevel == maxLevel)
+            else if (playerMuscle.Properties.MuscleLevel == maxLevel)
             {
                 PlayerScores++;
 
                 for (int i = 0; i < musclesForComparison.Count; i++)
                 {
-                    if (musclesForComparison[i].MuscleLevel == maxLevel)
+                    if (musclesForComparison[i].Properties.MuscleLevel == maxLevel)
                     {
                         UpEnemyScores(musclesForComparison[i]);
                     }
@@ -96,7 +96,7 @@ public class TournamentHandler : MonoBehaviour
             {
                 for (int i = 0; i < musclesForComparison.Count; i++)
                 {
-                    if (musclesForComparison[i].MuscleLevel == 1)
+                    if (musclesForComparison[i].Properties.MuscleLevel == 1)
                     {
                         UpEnemyScores(musclesForComparison[i]);
                     }
@@ -107,11 +107,11 @@ public class TournamentHandler : MonoBehaviour
         {
             PlayerScores--;
 
-            var maxLevel = musclesForComparison.Max(x => x.MuscleLevel);
+            var maxLevel = musclesForComparison.Max(x => x.Properties.MuscleLevel);
 
             for (int i = 0; i < musclesForComparison.Count; i++)
             {
-                if (musclesForComparison[i].MuscleLevel == maxLevel)
+                if (musclesForComparison[i].Properties.MuscleLevel == maxLevel)
                 {
                     UpEnemyScores(musclesForComparison[i]);
                 }
@@ -133,7 +133,7 @@ public class TournamentHandler : MonoBehaviour
 
     public static Dictionary<Muscle.MuscleTypes, int> GetEnemyMusclesLevels(Enemy enemy)
     {
-        var playerMaxMuscleLevel = PlayerAttributes.Muscles.Max(x => x.Muscle.MuscleLevel);
+        var playerMaxMuscleLevel = PlayerAttributes.Muscles.Max(x => x.Muscle.Properties.MuscleLevel);
         var muscleTypes = Enum.GetNames(typeof(Muscle.MuscleTypes));
 
         foreach (var item in muscleTypes)

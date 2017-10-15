@@ -19,21 +19,12 @@ public class ClickManager : MonoBehaviour
     {
         for (int i = 0; i < PlayerAttributes.Muscles.Count; i++)
         {
-            PlayerAttributes.Muscles[i].Muscle.OnClicksChanging += player.GetComponent<PlayerAttributes>().Muscle_ChangeClicks;
+            PlayerAttributes.Muscles[i].Muscle.Properties.OnClicksChanging += player.GetComponent<PlayerAttributes>().Muscle_ChangeClicks;
         }
     }
     
-    private static bool isNextLevel()
-    {
-        return true;
-        //return AllClicks(GameObject.Find("Img")) >= PlayerAttributes.experience.GetExp(PlayerAttributes.experience.Level);
-    }
-
     public void BackToPlayer()
     {
-        //var sumClicks = AllClicks(GameObject.Find("Player"));
-        //clicksText.text = string.Format("All Clicks: {0}\nLevel: {1}", sumClicks, PlayerAttributes.experience.Level);
-
         ZoomSystem.Detach();
 
         Camera.main.orthographicSize = 5f;

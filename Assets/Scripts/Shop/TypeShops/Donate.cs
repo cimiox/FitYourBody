@@ -21,7 +21,7 @@ public class Donate : Shop, IShop
 
         base.Inititalize<T>(type, thisGO);
 
-        PlayerAttributes.OnLevelChanged += LevelChanged_OnLevelChanged;
+        PlayerAttributes.Properties.OnLevelChanged += LevelChanged_OnLevelChanged;
     }
 
     protected override Cell CreateCell<T>(T item, IShop shop, Transform parent)
@@ -33,7 +33,7 @@ public class Donate : Shop, IShop
 
     private void LevelChanged_OnLevelChanged()
     {
-        CountNotifications = GetNewItems(PlayerAttributes.Level, this);
+        CountNotifications = GetNewItems(PlayerAttributes.PlayerProperties.Level, this);
     }
 
     private void Awake()

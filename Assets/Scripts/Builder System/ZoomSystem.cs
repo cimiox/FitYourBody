@@ -18,7 +18,7 @@ public class ZoomSystem : ScriptableObject
 
     public static void Detach()
     {
-        Muscle.ZoomableGO.GetComponent<Muscle>().IsZoom = false;
+        PlayerAttributes.ZoomableGO.GetComponent<Muscle>().IsZoom = false;
         Camera.main.orthographicSize = startOthographicSize;
         Camera.main.transform.position = startCameraPosition;
     }
