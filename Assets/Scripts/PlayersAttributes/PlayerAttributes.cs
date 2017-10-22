@@ -111,6 +111,7 @@ public class PlayerAttributes : MonoBehaviour
         SerializationSystem.PathToProperties = Application.persistentDataPath;
         PlayerProperties = SerializationSystem.Load<Properties>();
         OnPlayerPropertiesLoaded?.Invoke();
+        SetBackgroundBlur();
 
         //SerializationSystem.Save(PlayerProperties);
         IsCanSave = true;
@@ -122,6 +123,12 @@ public class PlayerAttributes : MonoBehaviour
     private void Start()
     {
         StartCoroutine(WaitMuscleIntialized());
+    }
+
+    private void SetBackgroundBlur()
+    {
+        ZoomSystem.BackgroundBlur = GameObject.Find("BackgroundBlur");
+        ZoomSystem.BackgroundBlur.SetActive(false);
     }
 
     private IEnumerator WaitMuscleIntialized()

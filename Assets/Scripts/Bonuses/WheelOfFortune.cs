@@ -14,50 +14,93 @@ public class WheelOfFortune : MonoBehaviour
         set { prizes = value; }
     }
 
-    private GameObject palka;
-    public GameObject Palka
+    private GameObject separator;
+    public GameObject Separator
     {
-        get { return palka = palka == null ? Resources.Load<GameObject>("Palka") : palka; }
+        get { return separator = separator == null ? Resources.Load<GameObject>("WheelOfFortune/Separator") : separator; }
     }
 
-    public GameObject Arrow { get; set; }
+    [SerializeField]
+    private GameObject objectForRotation;
+    public GameObject ObjectForRotation
+    {
+        get { return objectForRotation; }
+        set { objectForRotation = value; }
+    }
+
+    [SerializeField]
+    private GameObject arrow;
+    public GameObject Arrow
+    {
+        get { return arrow; }
+        set { arrow = value; }
+    }
+
+    private float RotationTime { get; set; } = 5;
+    private float DeltaTime { get; set; }
+    private float WheelSpeed { get; set; }
+    private WheelStates WheelState { get; set; } = WheelStates.Idle;
 
     public Quaternion StartPosition { get; set; } = Quaternion.identity;
 
     private void Start()
     {
-        int angle = 360 / 7;
-        for (int i = 1; i < 8; i++)
+        //IntializeWheel();
+    }
+
+    private void Update()
+    {
+        switch (WheelState)
         {
-            GameObject sprite = Instantiate(Palka, Vector3.zero, Quaternion.identity);
+            case WheelStates.Rotation:
+                RotateWheel();
+                break;
+            case WheelStates.Stop:
+                StopWheel();
+                break;
+            case WheelStates.Idle:
+                return;
+        }
+    }
+
+    private void IntializeWheel()
+    {
+        int angle = 360 / Prizes.Length - 1;
+        int count = Prizes.Length / 2;
+
+        for (int i = 1; i < count; i++)
+        {
+            GameObject sprite = Instantiate(Separator, ObjectForRotation.transform);
             sprite.transform.Rotate(0, 0, angle * i);
         }
-
-        StartCoroutine(StartWheel());
     }
 
-    public void OnMouseDown()
+    public void StartWheel()
     {
-        StartCoroutine(StartWheel());
+        WheelState = WheelStates.Rotation;
+        WheelSpeed = Random.Range(0.5f, 2);
     }
 
-    private IEnumerator StartWheel()
+    private void RotateWheel()
     {
-        float seconds = 15;
-        float time = 0;
-        float x = Random.Range(0.1f, 1.0f);
-        while (time <= seconds)
-        {
-            time += Time.deltaTime;
+        DeltaTime += Time.deltaTime;
+        ObjectForRotation.transform.Rotate(new Vector3(0, 0, WheelSpeed * DeltaTime));
 
-            if (time <= seconds / 2)
-                transform.Rotate(0, 0, time * Mathf.Log(x));
-            else
-                transform.Rotate(0, 0, (seconds - time) * Mathf.Log(Mathf.Exp(1), x));
+        if (DeltaTime >= RotationTime)
+            WheelState = WheelStates.Stop;
+    }
 
-            yield return null;
-        }
+    private void StopWheel()
+    {
+        DeltaTime -= Time.deltaTime;
+        ObjectForRotation.transform.Rotate(new Vector3(0, 0, WheelSpeed * DeltaTime));
 
+        if (DeltaTime <= 0)
+            WheelState = WheelStates.Idle;
+    }
+
+    private void GivePrize()
+    {
         var prize = Prizes[0];
 
         for (int i = 0; i < Prizes.Length; i++)
@@ -71,7 +114,14 @@ public class WheelOfFortune : MonoBehaviour
                 }
             }
         }
-
-        //TODO Show Prize
     }
+
+
+    private enum WheelStates
+    {
+        Rotation,
+        Stop,
+        Idle
+    }
+    //TODO Show Prize
 }

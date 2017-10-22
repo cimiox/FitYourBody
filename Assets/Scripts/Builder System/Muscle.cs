@@ -22,6 +22,9 @@ public abstract class Muscle : MonoBehaviour
     public bool IsDouble { get; set; }
     public Attributes Properties { get; set; }
 
+    public static AudioSource Source { get; set; }
+    public static AudioClip Clip { get; set; }
+
     protected virtual void Initialize()
     {
         ZoomSystem.Zoom(PlayerAttributes.ZoomableGO);
