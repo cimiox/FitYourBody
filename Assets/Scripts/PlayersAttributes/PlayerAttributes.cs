@@ -25,6 +25,18 @@ public class PlayerAttributes : MonoBehaviour
 
     public static bool IsCanSave { get; set; }
 
+    private Slider experienceSlider;
+    public Slider ExperienceSlider
+    {
+        get
+        {
+            return experienceSlider = experienceSlider == null
+                ? GameObject.Find("Experience").GetComponent<Slider>()
+                : experienceSlider;
+        }
+    }
+
+
     public class Properties
     {
         public static event MoneyChanged OnMoneyChanged;
@@ -144,8 +156,8 @@ public class PlayerAttributes : MonoBehaviour
 
     private void LevelChanged_OnLevelChanged()
     {
-        ClickManager.experience.value = 0f;
-        ClickManager.experience.maxValue = GetExpForNextLVL(PlayerProperties.Level);
+        ExperienceSlider.value = 0f;
+        ExperienceSlider.maxValue = GetExpForNextLVL(PlayerProperties.Level);
     }
 
     public float GetExpForNextLVL(float level)
@@ -180,7 +192,7 @@ public class PlayerAttributes : MonoBehaviour
     public void Muscle_ChangeClicks(float count)
     {
         //clicksText.text = string.Format("Clicks: {0}\nLevel: {1}", MuscleSystem.ZoomableGO.GetComponent<MuscleSystem>().Clicks, PlayerAttributes.Expirience.Level);
-        UpLevel(ClickManager.experience, count);
+        //UpLevel(ClickManager.experience, count);
     }
 
     private IEnumerator UpLevelAnimation(Slider slider, float value, float speed)
@@ -203,5 +215,11 @@ public class PlayerAttributes : MonoBehaviour
         }
         else
             return false;
+    }
+
+    public void Detach()
+    {
+        ZoomSystem.Detach();
+        PointerClickHandler.Close();
     }
 }

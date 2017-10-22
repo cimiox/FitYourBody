@@ -28,6 +28,7 @@ public abstract class Muscle : MonoBehaviour
     protected virtual void Initialize()
     {
         ZoomSystem.Zoom(PlayerAttributes.ZoomableGO);
+        PointerClickHandler.Intialize(this);
         IsZoom = true;
     }
 
@@ -45,16 +46,17 @@ public abstract class Muscle : MonoBehaviour
                         Initialize();
                         return;
                     }
-
-                    Properties.LocalClicks += Convert.ToInt32(1 * PlayerAttributes.PlayerProperties.Multiplier);
-
-                    if (Properties.LocalClicks >= GetMuscleExperience(Properties.MuscleLevel))
-                    {
-                        OnMuscleChanged?.Invoke(MuscleController.MuscleLevelUp(this));
-                    }
                 }
             }
         }
+    }
+
+    public void Click()
+    {
+        Properties.LocalClicks += Convert.ToInt32(1 * PlayerAttributes.PlayerProperties.Multiplier);
+
+        if (Properties.LocalClicks >= GetMuscleExperience(Properties.MuscleLevel))
+            OnMuscleChanged?.Invoke(MuscleController.MuscleLevelUp(this));
     }
 
     protected int GetMuscleExperience(int level)

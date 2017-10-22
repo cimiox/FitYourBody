@@ -14,11 +14,6 @@ public class MuscleController
 
         foreach (var item in Muscles)
         {
-            if (item.Properties.TypeMuscle == Muscle.MuscleTypes.HandsFront)
-            {
-                Debug.Log(item.Properties.MuscleLevel == PlayerAttributes.PlayerProperties.Muscles.First(x => x.Key == item.Properties.TypeMuscle).Value.MuscleLevel);
-                Debug.Log(item.Properties.MuscleLevel);
-            }
             item.gameObject.SetActive(item.Properties.MuscleLevel == 
                 PlayerAttributes.PlayerProperties.Muscles
                 .First(x => x.Key == item.Properties.TypeMuscle).Value.MuscleLevel);
