@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,8 +24,8 @@ public class PlayerAttributes : MonoBehaviour
 
     public static bool IsCanSave { get; set; }
 
-    private Slider experienceSlider;
-    public Slider ExperienceSlider
+    private static Slider experienceSlider;
+    public static Slider ExperienceSlider
     {
         get
         {
@@ -60,7 +59,7 @@ public class PlayerAttributes : MonoBehaviour
             }
         }
 
-        private int level;
+        private int level = 1;
         public int Level
         {
             get
@@ -88,6 +87,20 @@ public class PlayerAttributes : MonoBehaviour
             set
             {
                 multiplier = value;
+
+                if (IsCanSave)
+                    SerializationSystem.Save(PlayerProperties);
+            }
+        }
+
+
+        private float experience;
+        public float Experience
+        {
+            get { return experience; }
+            set
+            {
+                experience = value;
 
                 if (IsCanSave)
                     SerializationSystem.Save(PlayerProperties);
@@ -125,11 +138,15 @@ public class PlayerAttributes : MonoBehaviour
         OnPlayerPropertiesLoaded?.Invoke();
         SetBackgroundBlur();
 
-        //SerializationSystem.Save(PlayerProperties);
+        SerializationSystem.Save(PlayerProperties);
         IsCanSave = true;
+
+        ExperienceSlider.maxValue = GetExpForNextLVL(PlayerProperties.Level);
+        ExperienceSlider.value = PlayerProperties.Experience;
 
         Properties.OnLevelChanged += LevelChanged_OnLevelChanged;
         Muscle.OnMuscleChanged += Muscle_OnMuscleChanged;
+        Muscle.Attributes.OnClicksChanging += Muscle_ChangeClicks;
     }
 
     private void Start()
@@ -145,7 +162,7 @@ public class PlayerAttributes : MonoBehaviour
 
     private IEnumerator WaitMuscleIntialized()
     {
-        yield return new WaitUntil(() => GameObject.FindObjectsOfType<Muscle>().ToList().TrueForAll(x => x.Properties != null));
+        yield return new WaitUntil(() => FindObjectsOfType<Muscle>().ToList().TrueForAll(x => x.Properties != null));
         MuscleController.Intialize();
     }
 
@@ -192,7 +209,7 @@ public class PlayerAttributes : MonoBehaviour
     public void Muscle_ChangeClicks(float count)
     {
         //clicksText.text = string.Format("Clicks: {0}\nLevel: {1}", MuscleSystem.ZoomableGO.GetComponent<MuscleSystem>().Clicks, PlayerAttributes.Expirience.Level);
-        //UpLevel(ClickManager.experience, count);
+        UpLevel(ExperienceSlider, count);
     }
 
     private IEnumerator UpLevelAnimation(Slider slider, float value, float speed)
@@ -220,6 +237,5 @@ public class PlayerAttributes : MonoBehaviour
     public void Detach()
     {
         ZoomSystem.Detach();
-        PointerClickHandler.Close();
     }
 }

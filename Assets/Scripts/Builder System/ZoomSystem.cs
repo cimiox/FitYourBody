@@ -20,6 +20,7 @@ public class ZoomSystem : ScriptableObject
 
     public static void Detach()
     {
+        PointerClickHandler.Close();
         BackgroundBlur.SetActive(false);
         PlayerAttributes.ZoomableGO.GetComponent<Muscle>().IsZoom = false;
         Camera.main.orthographicSize = startOthographicSize;

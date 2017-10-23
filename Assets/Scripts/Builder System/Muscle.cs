@@ -97,7 +97,7 @@ public abstract class Muscle : MonoBehaviour
 
     public class Attributes
     {
-        public event ChangingClicks OnClicksChanging;
+        public static event ChangingClicks OnClicksChanging;
 
         private float localClicks;
         public float LocalClicks
