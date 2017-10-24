@@ -25,6 +25,9 @@ public class PlayerAttributes : MonoBehaviour
     public static bool IsCanSave { get; set; }
 
     private static Slider experienceSlider;
+
+    
+
     public static Slider ExperienceSlider
     {
         get
@@ -34,7 +37,6 @@ public class PlayerAttributes : MonoBehaviour
                 : experienceSlider;
         }
     }
-
 
     public class Properties
     {
@@ -237,5 +239,34 @@ public class PlayerAttributes : MonoBehaviour
     public void Detach()
     {
         ZoomSystem.Detach();
+    }
+
+    public static void ActivateBlur(Muscle muscle)
+    {
+        foreach (var item in MuscleController.Muscles)
+        {
+            if (item.gameObject.activeInHierarchy && item != muscle)
+            {
+                var blur = Instantiate(Resources.Load<GameObject>("PlayerBlur"), Vector3.zero, Quaternion.identity, item.transform);
+                blur.transform.localPosition = new Vector3(0, 0, -1);
+                blur.GetComponent<SpriteRenderer>().sprite = item.GetComponent<SpriteRenderer>().sprite;
+            }
+        }
+    }
+
+    public static void DeactivateBlur()
+    {
+        foreach (var item in MuscleController.Muscles)
+        {
+            try
+            {
+                if (item.transform.childCount > 0)
+                    Destroy(item.transform.Find("PlayerBlur(Clone)").gameObject);
+            }
+            catch
+            {
+                continue;
+            }
+        }
     }
 }
