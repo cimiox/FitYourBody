@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class PointerClickHandler : MonoBehaviour, IPointerClickHandler
 {
+    public delegate void Intialized();
+    public static event Intialized OnIntialized;
+
     private static Muscle Muscle { get; set; }
     private static GameObject ClickHandler { get; set; }
     public GameObject ExpCircle { get; set; }
@@ -18,12 +21,14 @@ public class PointerClickHandler : MonoBehaviour, IPointerClickHandler
 
     public static void Intialize(Muscle muscle)
     {
+        OnIntialized?.Invoke();
         ClickHandler.SetActive(true);
         Muscle = muscle;
     }
 
     public static void Close()
     {
+        OnIntialized?.Invoke();
         ClickHandler.SetActive(false);
         Muscle = null;
     }
@@ -31,8 +36,10 @@ public class PointerClickHandler : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         Muscle.Click();
-        var radius = UnityEngine.Random.Range(0.5f, 1.5f);
+
+        var radius = UnityEngine.Random.Range(2.0f, 4.0f);
         var expCircle = Instantiate(ExpCircle, eventData.position, Quaternion.identity, PlayerAttributes.ExperienceSlider.transform);
+
         expCircle.transform.localScale = new Vector3(radius, radius, 0);
         //TODO: CHANGE COLOR
         //expCircle.GetComponent<Image>().color = PlayerAttributes.ExperienceSlider;

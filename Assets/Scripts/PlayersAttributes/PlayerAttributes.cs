@@ -25,9 +25,6 @@ public class PlayerAttributes : MonoBehaviour
     public static bool IsCanSave { get; set; }
 
     private static Slider experienceSlider;
-
-    
-
     public static Slider ExperienceSlider
     {
         get
@@ -194,14 +191,10 @@ public class PlayerAttributes : MonoBehaviour
         else
         {
             if (countClicks < slider.maxValue)
-            {
                 slider.value += countClicks;
-                //StartCoroutine(UpLevelAnimation(slider, countClicks, 1f));
-            }
             else if (countClicks > slider.maxValue)
             {
                 slider.value += slider.maxValue;
-                //StartCoroutine(UpLevelAnimation(slider, slider.maxValue, 1f));
                 PlayerProperties.Level++;
                 UpLevel(slider, countClicks - slider.maxValue);
             }
@@ -210,19 +203,8 @@ public class PlayerAttributes : MonoBehaviour
 
     public void Muscle_ChangeClicks(float count)
     {
-        //clicksText.text = string.Format("Clicks: {0}\nLevel: {1}", MuscleSystem.ZoomableGO.GetComponent<MuscleSystem>().Clicks, PlayerAttributes.Expirience.Level);
         UpLevel(ExperienceSlider, count);
-    }
-
-    private IEnumerator UpLevelAnimation(Slider slider, float value, float speed)
-    {
-        do
-        {
-            value -= speed > value ? speed = value : speed;
-            slider.value += speed;
-            yield return new WaitForSecondsRealtime(0.1f);
-            speed *= 1.5f;
-        } while (value > 0);
+        PlayerProperties.Experience += count;
     }
 
     public static bool RemoveMoney(double count)

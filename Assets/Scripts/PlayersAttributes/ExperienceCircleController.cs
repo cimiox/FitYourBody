@@ -1,31 +1,32 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
 
 public class ExperienceCircleController : MonoBehaviour
 {
     public float Speed { get; set; } = 0.05f;
     public float DeltaTime { get; set; }
-    public bool IsMove { get; set; }
+    public float TimeForEndPoint { get; set; } = 1f;
 
-    private void Start()
+    private void Awake()
     {
         StartCoroutine(MovementCircle());
     }
 
-    private void Update()
-    {
-        if (IsMove)
-            transform.localPosition = Vector3.Slerp(transform.localPosition, Vector3.zero, Speed);
-    }
-
     private IEnumerator MovementCircle()
     {
-        yield return new WaitForSeconds(0.1f);
-        IsMove = true;
+        Vector2 startPosition = transform.localPosition;
+        float startTime = Time.realtimeSinceStartup;
+        float fraction = 0f;
 
-        yield return new WaitUntil(() => Vector3.Distance(transform.localPosition, Vector3.zero) < 5);
+        while (fraction < 1f)
+        {
+            fraction = Mathf.Clamp01((Time.realtimeSinceStartup - startTime) / TimeForEndPoint);
+            transform.localPosition = new Vector2(
+                Mathf.SmoothStep(startPosition.x, 0, fraction),
+                Mathf.SmoothStep(startPosition.y, 0, fraction));
+            yield return null;
+        }
+
         Destroy(gameObject);
     }
 }
