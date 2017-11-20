@@ -234,6 +234,19 @@ public class PlayerAttributes : MonoBehaviour
                 blur.GetComponent<SpriteRenderer>().sprite = item.GetComponent<SpriteRenderer>().sprite;
             }
         }
+        //TODO: REWRITE this
+        try
+        {
+            var blurHead = Instantiate(Resources.Load<GameObject>("PlayerBlur"), Vector3.zero, Quaternion.identity, GameObject.Find("Head_S").transform);
+            blurHead.transform.localPosition = new Vector3(0, 0, -1);
+            blurHead.GetComponent<SpriteRenderer>().sprite = GameObject.Find("Head_S").GetComponent<SpriteRenderer>().sprite;
+        }
+        catch
+        {
+            var blurHead = Instantiate(Resources.Load<GameObject>("PlayerBlur"), Vector3.zero, Quaternion.identity, GameObject.Find("Head Back").transform);
+            blurHead.transform.localPosition = new Vector3(0, 0, -1);
+            blurHead.GetComponent<SpriteRenderer>().sprite = GameObject.Find("Head Back").GetComponent<SpriteRenderer>().sprite;
+        }
     }
 
     public static void DeactivateBlur()
@@ -250,5 +263,16 @@ public class PlayerAttributes : MonoBehaviour
                 continue;
             }
         }
+
+        //TODO: REWRITE this
+        try
+        {
+            Destroy(GameObject.Find("Head_S").transform.GetChild(0).gameObject);
+        }
+        catch
+        {
+            Destroy(GameObject.Find("Head Back").transform.GetChild(0).gameObject);
+        }
+        
     }
 }
