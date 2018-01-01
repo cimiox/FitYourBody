@@ -18,7 +18,7 @@ public class PlayerAttributes : MonoBehaviour
     public static Properties PlayerProperties { get; set; }
 
     public static int[] MuscleExperience = new int[10]
-    {5, 10, 15, 20, 5000000, 29000, 35000, 43000, 47000, 55000};
+    {15, 25, 50, 75, 5000000, 29000, 35000, 43000, 47000, 55000};
 
     private readonly float StartExp = 150;
 
