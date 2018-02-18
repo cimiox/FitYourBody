@@ -14,8 +14,11 @@ public abstract class Muscle : MonoBehaviour
     private bool isEnemy;
     public bool IsEnemy
     {
-        get { return isEnemy =
-                transform.parent.parent.GetComponentInParent<Enemy>() == null ? isEnemy = false : isEnemy = true; }
+        get
+        {
+            return isEnemy =
+              transform.parent.parent.GetComponentInParent<Enemy>() == null ? isEnemy = false : isEnemy = true;
+        }
     }
 
     public bool IsZoom { get; set; }
@@ -26,24 +29,23 @@ public abstract class Muscle : MonoBehaviour
     {
         ZoomSystem.Zoom(PlayerAttributes.ZoomableGO);
         PointerClickHandler.Intialize(this);
-        PlayerAttributes.ActivateBlur(this);
         IsZoom = true;
     }
 
     protected virtual void OnMouseDown()
     {
-        if (!EventSystem.current.IsPointerOverGameObject())
+        if (PointerClickHandler.Muscle != null)
+            return;
+
+        if (!IsEnemy)
         {
-            if (!IsEnemy)
+            if (!TournamentHandler.IsTournamentStart)
             {
-                if (!TournamentHandler.IsTournamentStart)
+                PlayerAttributes.ZoomableGO = gameObject;
+                if (!IsZoom)
                 {
-                    PlayerAttributes.ZoomableGO = gameObject;
-                    if (!IsZoom)
-                    {
-                        Initialize();
-                        return;
-                    }
+                    Initialize();
+                    return;
                 }
             }
         }

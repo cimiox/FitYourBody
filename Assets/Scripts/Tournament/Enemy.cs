@@ -14,7 +14,7 @@ public class Enemy : MonoBehaviour, IDisposable
     public GameObject EnemyGO { get; set; }
     public List<Muscle> Muscles { get; set; } = new List<Muscle>();
 
-    public Enemy()
+    public void Awake()
     {
         GameObject tournament = GameObject.Find("Tournament");
 

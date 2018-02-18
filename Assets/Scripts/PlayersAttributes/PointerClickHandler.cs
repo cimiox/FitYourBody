@@ -8,7 +8,7 @@ public class PointerClickHandler : MonoBehaviour, IPointerClickHandler
     public delegate void Intialized();
     public static event Intialized OnIntialized;
 
-    private static Muscle Muscle { get; set; }
+    public static Muscle Muscle { get; set; }
     private static GameObject ClickHandler { get; set; }
     public GameObject ExpCircle { get; set; }
 
@@ -41,6 +41,7 @@ public class PointerClickHandler : MonoBehaviour, IPointerClickHandler
         var expCircle = Instantiate(ExpCircle, eventData.position, Quaternion.identity, PlayerAttributes.ExperienceSlider.transform);
 
         expCircle.transform.localScale = new Vector3(radius, radius, 0);
+        expCircle.GetComponent<ExperienceCircleController>().StartMove();
         //TODO: CHANGE COLOR
         //expCircle.GetComponent<Image>().color = PlayerAttributes.ExperienceSlider;
     }

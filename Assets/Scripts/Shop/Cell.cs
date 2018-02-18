@@ -19,10 +19,11 @@ public class Cell : MonoBehaviour
 
     public void Intialize()
     {
-        Name = gameObject.transform.GetChild(0).GetComponent<Text>();
-        Sprite = gameObject.transform.GetChild(1).GetComponent<Image>();
-        Description = gameObject.transform.GetChild(2).GetComponent<Text>();
-        BuyBtn = gameObject.transform.GetChild(3).GetComponent<Button>();
+        //Name = gameObject.transform.GetChild(0).GetComponent<Text>();
+        Sprite = gameObject.transform.GetChild(0).GetComponent<Image>();
+        //Description = gameObject.transform.GetChild(2).GetComponent<Text>();
+        BuyBtn = gameObject.transform.GetChild(1).GetComponent<Button>();
+        BuyBtn.onClick.AddListener(() => { });
     }
 
     private void Properties_OnBought()
