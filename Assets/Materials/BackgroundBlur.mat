@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Blur
+  m_Name: BackgroundBlur
   m_Shader: {fileID: 4800000, guid: 8cc99d0b5127c524a9fc7de4fc1ddfba, type: 3}
   m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
   m_LightmapFlags: 4

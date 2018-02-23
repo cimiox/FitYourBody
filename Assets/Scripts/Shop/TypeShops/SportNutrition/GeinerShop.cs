@@ -41,7 +41,7 @@ public class GeinerShop : SportNutrition, IShop
 
     public void Activate(string animation)
     {
-        DeactivateAllShops();
+        //DeactivateAllShops();
 
         gameObject.SetActive(true);
 

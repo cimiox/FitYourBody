@@ -40,8 +40,6 @@ public class SportingGoods : NotDonate, IShop
 
     public void Activate(string animation)
     {
-        DeactivateAllShops();
-
         gameObject.SetActive(true);
 
         //TODO: Animation

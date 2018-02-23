@@ -78,11 +78,8 @@ public abstract class Shop : MonoBehaviour
         return JsonConvert.DeserializeObject<List<T>>(json.text);
     }
 
-    protected void DeactivateAllShops()
+    public void DeactivateShop()
     {
-        for (int i = 0; i < Shops.Count; i++)
-        {
-            Shops[i].gameObject.SetActive(false);
-        }
+        gameObject.SetActive(false);
     }
 }
