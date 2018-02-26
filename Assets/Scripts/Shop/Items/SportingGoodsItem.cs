@@ -9,11 +9,13 @@ public class SportingGoodsItem : Item
     public static event ChooseMuscle OnChooseMuscle;
 
     public string Description { get; set; }
+    public float Multiplier { get; set; }
 
-    public SportingGoodsItem(int id, string name, string description, double cost, int levelNeed)
+    public SportingGoodsItem(int id, string name, string description, double cost, int levelNeed, float multiplier)
         : base(id, name, cost, levelNeed)
     {
         Description = description;
+        Multiplier = multiplier;
     }
 
     public override bool Buy(Cell cell, IShop shop)

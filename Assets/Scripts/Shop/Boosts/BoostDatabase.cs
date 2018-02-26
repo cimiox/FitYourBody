@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Text;
 using UnityEngine;
@@ -8,7 +9,7 @@ using UnityEngine;
 [Serializable]
 public static class BoostDatabase
 {
-    public static List<Boost> Boosts { get; private set; } = new List<Boost>();
+    public static ObservableCollection<Boost> Boosts { get; private set; } = new ObservableCollection<Boost>();
 
     public static void Load()
     {
@@ -17,7 +18,7 @@ public static class BoostDatabase
             using (StreamReader file = new StreamReader(Application.persistentDataPath + "/Boosts.json"))
             {
                 string json = file.ReadToEnd();
-                Boosts = JsonConvert.DeserializeObject<List<Boost>>(json);
+                Boosts = JsonConvert.DeserializeObject<ObservableCollection<Boost>>(json);
             }
         }
     }

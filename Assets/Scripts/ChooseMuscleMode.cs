@@ -13,6 +13,7 @@ public class ChooseMuscleMode : MonoBehaviour
     private void SportingGoodsItem_OnChooseMuscle(System.Action actionAfterSelection)
     {
         gameObject.SetActive(true);
-        StartCoroutine();
+        //TODO: Wait to choose muscle
+        //StartCoroutine();
     }
 }
