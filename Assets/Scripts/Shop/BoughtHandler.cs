@@ -51,7 +51,7 @@ public class BoughtHandler : MonoBehaviour
                 boostsToRemove.Add(item);
                 continue;
             }
-            
+
             obj.GetComponentInChildren<Image>().sprite = item.Properties.Sprite();
             obj.GetComponentInChildren<Text>().text = Math.Truncate(item.NowTime).ToString();
         }

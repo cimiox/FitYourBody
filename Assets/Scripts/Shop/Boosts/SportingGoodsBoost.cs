@@ -8,6 +8,10 @@ public class SportingGoodsBoost : Boost
 {
     public Muscle.MuscleTypes MuscleTypeForBoost { get; set; }
 
+    public SportingGoodsBoost(Timer timer) : base(timer)
+    {
+    }
+
     public override IEnumerator TimerEnumerator()
     {
         var muscleForBoost = PlayerAttributes.PlayerProperties.Muscles.First(x => x.Value.TypeMuscle.Equals(MuscleTypeForBoost)).Value;

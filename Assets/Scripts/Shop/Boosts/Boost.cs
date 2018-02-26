@@ -7,37 +7,15 @@ public abstract class Boost
 {
     public Item Properties { get; set; }
     public Timer BoostTimer { get; set; }
-
-    //[SerializeField]
-    //private double nowTime;
-    //public double NowTime
-    //{
-    //    get { return Math.Truncate(nowTime); }
-    //    set
-    //    {
-    //        if (isFirstCall)
-    //        {
-    //            isFirstCall = false;
-    //            OnTickHandler?.Invoke(this);
-    //        }
-    //        nowTime = value;
-    //        BoostDatabase.Save();
-    //    }
-    //}
-    //public DateTime EndTime { get; set; }
+    public Coroutine TimerCoroutine { get; set; }
 
     public abstract IEnumerator TimerEnumerator();
 
-    public Boost()
-    {
-        if (Properties != null)
-            PlayerAttributes.PlayerProperties.Multiplier += (Properties as SportNutritionItem).Multiplier;
-    }
+    public virtual GameObject BoostGameObject { get; }
 
-    ~Boost()
+    public Boost(Timer timer)
     {
-        if (Properties != null)
-            PlayerAttributes.PlayerProperties.Multiplier -= (Properties as SportNutritionItem).Multiplier;
+        BoostTimer = timer;
     }
 
     public class Timer : INotifyPropertyChanged
@@ -60,6 +38,11 @@ public abstract class Boost
         {
             get { return endTime; }
             set { endTime = value; }
+        }
+
+        public Timer(DateTime endTime)
+        {
+            EndTime = endTime;
         }
 
         protected void OnPropertyChanged(string propertyName)
