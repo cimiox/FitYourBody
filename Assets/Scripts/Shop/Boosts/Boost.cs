@@ -11,8 +11,6 @@ public abstract class Boost
 
     public abstract IEnumerator TimerEnumerator();
 
-    public virtual GameObject BoostGameObject { get; }
-
     public Boost(Timer timer)
     {
         BoostTimer = timer;
@@ -22,8 +20,8 @@ public abstract class Boost
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private TimeSpan nowTime;
-        public TimeSpan NowTime
+        private DateTime nowTime;
+        public DateTime NowTime
         {
             get { return nowTime; }
             set

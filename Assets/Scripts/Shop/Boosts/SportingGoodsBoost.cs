@@ -24,7 +24,9 @@ public class SportingGoodsBoost : Boost
 
             muscleForBoost.LocalClicks += multiplier;
 
-            yield return new WaitForSeconds(0.5f);
+            BoostTimer.NowTime = DateTime.Now;
+
+            yield return new WaitForSeconds(1f);
         }
     }
 }

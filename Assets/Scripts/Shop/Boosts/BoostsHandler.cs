@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BoostsHandler : MonoBehaviour
@@ -26,10 +27,21 @@ public class BoostsHandler : MonoBehaviour
     }
 
     public static readonly int MaxBoosts = 2;
+    [SerializeField]
+    private Transform StackForBoost;
 
     private void Start()
     {
+        BoostDatabase.Load();
+
         BoostDatabase.Boosts.CollectionChanged += Boosts_CollectionChanged;
+
+        var boostFactory = new SportNutritionBoostsFactory();
+
+        foreach (var item in BoostDatabase.Boosts.Where(x => x is SportNutritionBoost))
+        {
+            boostFactory.CreateBoost(item, StackForBoost);
+        }
     }
 
     private void Boosts_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)

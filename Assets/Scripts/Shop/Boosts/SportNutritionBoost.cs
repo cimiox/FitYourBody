@@ -8,11 +8,6 @@ public class SportNutritionBoost : Boost
     public delegate void EndBoost();
     public event EndBoost OnEndBoost;
 
-    public override GameObject BoostGameObject
-    {
-        get { return Resources.Load<GameObject>("Shop/Boost"); }
-    }
-
     public SportNutritionBoost(Timer timer) : base(timer)
     {
         PlayerAttributes.PlayerProperties.Multiplier += (Properties as SportNutritionItem).Multiplier;
@@ -27,7 +22,7 @@ public class SportNutritionBoost : Boost
     {
         while (DateTime.Now >= BoostTimer.EndTime)
         {
-            BoostTimer.NowTime = BoostTimer.EndTime - DateTime.Now;
+            BoostTimer.NowTime = DateTime.Now;
             yield return new WaitForSeconds(1f);
         }
 

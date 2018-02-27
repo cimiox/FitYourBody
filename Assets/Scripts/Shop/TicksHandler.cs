@@ -7,32 +7,18 @@ using UnityEngine.UI;
 public class TicksHandler : MonoBehaviour
 {
     public Text Text { get; set; }
+    public Boost Boost { get; set; }
 
-    private void Awake()
+    private void Initialize(Boost boost)
     {
         Text = GetComponent<Text>();
+        Boost = boost;
+        Boost.BoostTimer.PropertyChanged += BoostTimer_PropertyChanged;
     }
 
-    public void CallTicks(Boost boost)
+    private void BoostTimer_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
-        StartCoroutine(Ticks(boost));
+        if (e.Equals("NowTime"))
+            Text.text = (Boost.BoostTimer.EndTime - Boost.BoostTimer.NowTime).Seconds.ToString();
     }
-
-    private IEnumerator Ticks(Boost boost)
-    {
-        while (true)
-        {
-            boost.NowTime = (boost.EndTime - DateTime.Now).TotalSeconds;
-
-            if (boost.NowTime <= 0)
-            {
-                Destroy(gameObject);
-                BoostDatabase.Boosts.Remove(boost);
-            }
-
-            Text.text = boost.NowTime.ToString();
-            yield return new WaitForSeconds(1f);
-        }
-    }
-
 }
