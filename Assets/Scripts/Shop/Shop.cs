@@ -47,9 +47,10 @@ public abstract class Shop : MonoBehaviour
         //TODO: Shop attributes
 
         //cell.Name.text = item.Name;
-        cell.Sprite.sprite = item.Sprite();
         //cell.Description.text = type.Items[i].Multiplier.ToString();
         //cell.Properties = item;
+
+        cell.Sprite.sprite = item.Sprite();
         item.OnBought += BoostsHandler.Instance.BoostsHandler_OnBought;
         cell.BuyBtn.interactable = item.IsUnlock ? true : false;
         cell.BuyBtn.onClick.AddListener(() => item.Buy(cell, shop));

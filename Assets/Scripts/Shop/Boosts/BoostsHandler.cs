@@ -32,15 +32,25 @@ public class BoostsHandler : MonoBehaviour
 
     private void Start()
     {
-        BoostDatabase.Load();
-
         BoostDatabase.Boosts.CollectionChanged += Boosts_CollectionChanged;
 
-        var boostFactory = new SportNutritionBoostsFactory();
+        BoostDatabase.Load();
 
-        foreach (var item in BoostDatabase.Boosts.Where(x => x is SportNutritionBoost))
+        var boostFactory = new SportNutritionBoostsFactory();
+        var sportNutritionBoosts = BoostDatabase.Boosts.Where(x => x is SportNutritionBoost).Select(x => x as SportNutritionBoost).ToList();
+
+        for (int i = 0; i < sportNutritionBoosts.Count; i++)
         {
-            boostFactory.CreateBoost(item, StackForBoost);
+            if (sportNutritionBoosts[i].BoostTimer.EndTime < DateTime.Now)
+            {
+                boostFactory.CreateBoost(sportNutritionBoosts[i], StackForBoost);
+
+                sportNutritionBoosts[i].OnEndBoost += () =>
+                {
+                    BoostDatabase.Boosts.Remove(sportNutritionBoosts[i]);
+                    BoostDatabase.Save();
+                };
+            }
         }
     }
 

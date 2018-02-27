@@ -17,6 +17,8 @@ public class SportNutritionBoostsFactory : IBoostsFactory
         GameObject obj = Object.Instantiate(BoostGameObject, parent);
         obj.GetComponent<SportNutritionBoostBehaviour>().Boost = boost;
 
+        (boost as SportNutritionBoost).OnEndBoost += () => Object.Destroy(obj);
+
         return obj;
     }
 
