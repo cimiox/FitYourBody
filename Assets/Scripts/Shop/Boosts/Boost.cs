@@ -11,9 +11,10 @@ public abstract class Boost
 
     public abstract IEnumerator TimerEnumerator();
 
-    public Boost(Timer timer)
+    public Boost(Timer timer, Item properties)
     {
         BoostTimer = timer;
+        Properties = properties;
     }
 
     public class Timer : INotifyPropertyChanged

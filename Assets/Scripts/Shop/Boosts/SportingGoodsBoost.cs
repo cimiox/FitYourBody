@@ -8,7 +8,7 @@ public class SportingGoodsBoost : Boost
 {
     public Muscle.MuscleTypes MuscleTypeForBoost { get; set; }
 
-    public SportingGoodsBoost(Timer timer) : base(timer)
+    public SportingGoodsBoost(Timer timer, Item properties) : base(timer, properties)
     {
     }
 

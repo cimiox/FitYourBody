@@ -9,10 +9,17 @@ public class SportNutritionBoostBehaviour : BoostBehaviour
         base.Start();
 
         Boost.BoostTimer.PropertyChanged += BoostTimer_PropertyChanged;
+        (Boost as SportNutritionBoost).OnEndBoost += () => Destroy(this);
+        UpdateText();
     }
 
     private void BoostTimer_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
-        TimerText.text = (Boost.BoostTimer.EndTime - Boost.BoostTimer.NowTime).Seconds.ToString();
+        UpdateText();
+    }
+
+    private void UpdateText()
+    {
+        TimerText.text = System.Math.Truncate((Boost.BoostTimer.EndTime - Boost.BoostTimer.NowTime).TotalSeconds).ToString();
     }
 }

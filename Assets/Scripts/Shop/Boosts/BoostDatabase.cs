@@ -18,7 +18,7 @@ public static class BoostDatabase
             using (StreamReader file = new StreamReader(Application.persistentDataPath + "/Boosts.json"))
             {
                 string json = file.ReadToEnd();
-                Boosts = JsonConvert.DeserializeObject<ObservableCollection<Boost>>(json);
+                Boosts = JsonConvert.DeserializeObject<ObservableCollection<Boost>>(json, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.All });
             }
         }
     }
@@ -27,7 +27,7 @@ public static class BoostDatabase
     {
         using (StreamWriter file = new StreamWriter(Application.persistentDataPath + "/Boosts.json"))
         {
-            string json = JsonConvert.SerializeObject(Boosts);
+            string json = JsonConvert.SerializeObject(Boosts, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.All });
             await file.WriteAsync(json);
             file.Dispose();
         }

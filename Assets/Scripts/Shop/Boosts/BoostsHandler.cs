@@ -27,47 +27,67 @@ public class BoostsHandler : MonoBehaviour
     }
 
     public static readonly int MaxBoosts = 2;
+
     [SerializeField]
     private Transform StackForBoost;
 
     private void Start()
     {
+        BoostDatabase.Load();
         BoostDatabase.Boosts.CollectionChanged += Boosts_CollectionChanged;
 
-        BoostDatabase.Load();
+        
+        
 
-        var boostFactory = new SportNutritionBoostsFactory();
-        var sportNutritionBoosts = BoostDatabase.Boosts.Where(x => x is SportNutritionBoost).Select(x => x as SportNutritionBoost).ToList();
+        
 
-        for (int i = 0; i < sportNutritionBoosts.Count; i++)
-        {
-            if (sportNutritionBoosts[i].BoostTimer.EndTime < DateTime.Now)
-            {
-                boostFactory.CreateBoost(sportNutritionBoosts[i], StackForBoost);
-
-                sportNutritionBoosts[i].OnEndBoost += () =>
-                {
-                    BoostDatabase.Boosts.Remove(sportNutritionBoosts[i]);
-                    BoostDatabase.Save();
-                };
-            }
-        }
+        OnAddNewItems(BoostDatabase.Boosts);
     }
 
     private void Boosts_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
     {
         if (e.NewItems != null)
-            foreach (var item in e.NewItems)
+            OnAddNewItems(e.NewItems);
+    }
+
+    private void CreateBoosts()
+    {
+        var boostsFactory = new SportNutritionBoostsFactory();
+        var sportNutritionBoosts = BoostDatabase.Boosts.Where(x => x is SportNutritionBoost).Select(x => x as SportNutritionBoost).ToList();
+
+        for (int i = 0; i < sportNutritionBoosts.Count; i++)
+        {
+            boostsFactory.CreateBoost(sportNutritionBoosts[i], StackForBoost);
+            var boost = BoostDatabase.Boosts.First(x => x.Equals(sportNutritionBoosts[i]));
+
+            sportNutritionBoosts[i].OnEndBoost += () =>
             {
-                (item as Boost).TimerCoroutine = StartCoroutine((item as Boost).TimerEnumerator());
-            }
+                BoostDatabase.Boosts.Remove(boost);
+                BoostDatabase.Save();
+            };
+        }
+    }
+
+    private void OnAddNewItems(IList newItems)
+    {
+        foreach (var item in newItems)
+        {
+            (item as Boost)
+                .TimerCoroutine
+                = StartCoroutine((item as Boost)
+                .TimerEnumerator());
+        }
     }
 
     public void BoostsHandler_OnBought(Item item)
     {
         if (item is SportNutritionItem)
-            BoostDatabase.Boosts.Add(new SportNutritionBoost(new Boost.Timer(DateTime.Now + TimeSpan.FromSeconds((item as SportNutritionItem).Time))));
+            BoostDatabase.Boosts.Add(new SportNutritionBoost(new Boost.Timer(DateTime.Now + TimeSpan.FromSeconds((item as SportNutritionItem).Time)), item));
         else if (item is SportingGoodsItem)
-            BoostDatabase.Boosts.Add(new SportingGoodsBoost(new Boost.Timer(DateTime.MaxValue)));
+            BoostDatabase.Boosts.Add(new SportingGoodsBoost(new Boost.Timer(DateTime.MaxValue), item));
+
+        CreateBoosts();
+
+        BoostDatabase.Save();
     }
 }
