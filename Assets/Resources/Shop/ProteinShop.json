@@ -1,0 +1,92 @@
+[
+  {
+    "ID": 1,
+    "Name": "Ultimate",
+    "Image": "Ultimate",
+    "Multiplier": 1.3,
+    "Time": 39,
+    "Cost": 8,
+    "Level": 2
+  },
+  {
+    "ID": 2,
+    "Name": "Isolatin",
+    "Image": "Isolatin",
+    "Multiplier": 1.5,
+    "Time": 60,
+    "Cost": 70,
+    "Level": 6
+  },
+  {
+    "ID": 3,
+    "Name": "Biomastech",
+    "Image": "BioMasTech",
+    "Multiplier": 2.0,
+    "Time": 100,
+    "Cost": 160,
+    "Level": 9
+  },
+  {
+    "ID": 4,
+    "Name": "Optinum",
+    "Image": "Optinum",
+    "Multiplier": 2.3,
+    "Time": 150,
+    "Cost": 280,
+    "Level": 11
+  },
+  {
+    "ID": 5,
+    "Name": "IronMaxXer",
+    "Image": "IronMaxXer",
+    "Multiplier": 2.7,
+    "Time": 210,
+    "Cost": 400,
+    "Level": 13
+  },
+  {
+    "ID": 6,
+    "Name": "MuscleOnn",
+    "Image": "MuscleOnn",
+    "Multiplier": 3.0,
+    "Time": 270,
+    "Cost": 670,
+    "Level": 15
+  },
+  {
+    "ID": 7,
+    "Name": "Lab Pro",
+    "Image": "LabPro",
+    "Multiplier": 3.5,
+    "Time": 330,
+    "Cost": 900,
+    "Level": 17
+  },
+  {
+    "ID": 8,
+    "Name": "Zech Nutri",
+    "Image": "ZechNutri",
+    "Multiplier": 3.9,
+    "Time": 400,
+    "Cost": 1200,
+    "Level": 19
+  },
+  {
+    "ID": 9,
+    "Name": "Nitronion Pure",
+    "Image": "NitronionPure",
+    "Multiplier": 4.3,
+    "Time": 450,
+    "Cost": 2000,
+    "Level": 22
+  },
+  {
+    "ID": 10,
+    "Name": "Lux Gold",
+    "Image": "LuxGold",
+    "Multiplier": 4.5,
+    "Time": 550,
+    "Cost": 5000,
+    "Level": 25
+  },
+]
