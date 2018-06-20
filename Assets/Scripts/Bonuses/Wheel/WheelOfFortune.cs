@@ -11,11 +11,8 @@ public class WheelOfFortune : MonoBehaviour
 
     public GameObject[] Prizes { get; private set; }
 
+    [SerializeField]
     private GameObject separator;
-    public GameObject Separator
-    {
-        get { return separator = separator == null ? Resources.Load<GameObject>("WheelOfFortune/Separator") : separator; }
-    }
 
     [SerializeField]
     private GameObject objectForRotation;
@@ -64,7 +61,18 @@ public class WheelOfFortune : MonoBehaviour
     {
         for (int i = 0; i < prizesDB.WheelRewards.Count; i++)
         {
-
+            switch (prizesDB.WheelRewards[i].RewardType)
+            {
+                case WheelRewardType.Gainer:
+                    break;
+                case WheelRewardType.Protein:
+                    break;
+                case WheelRewardType.Coin:
+                    break;
+                case WheelRewardType.Dollars:
+                    break;
+            }
+            //TODO: instantiate prizes
         }
 
         int angle = 360 / Prizes.Length - 1;
@@ -72,7 +80,7 @@ public class WheelOfFortune : MonoBehaviour
 
         for (int i = 1; i < count; i++)
         {
-            GameObject sprite = Instantiate(Separator, ObjectForRotation.transform);
+            GameObject sprite = Instantiate(separator, ObjectForRotation.transform);
             sprite.transform.Rotate(0, 0, angle * i);
         }
     }
