@@ -65,6 +65,7 @@ public class BoostsHandler : MonoBehaviour
         }
     }
 
+
     private void OnAddNewItems(IList newItems)
     {
         foreach (var item in newItems)
@@ -74,6 +75,7 @@ public class BoostsHandler : MonoBehaviour
 
         CreateBoosts();
     }
+
 
     public void BoostsHandler_OnBought(Item item)
     {

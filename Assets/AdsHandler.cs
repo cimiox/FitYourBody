@@ -1,5 +1,6 @@
 ﻿using AppodealAds.Unity.Api;
 using AppodealAds.Unity.Common;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,12 +11,34 @@ public class AdsHandler : MonoBehaviour, IRewardedVideoAdListener
     [SerializeField]
     private Button rewardedVideoButton;
 
+    public static List<Action> OnRewardedVideoFinishedCallbacks { get; } = new List<Action>();
+    public static List<Action> OnRewardedVideoNotFinishedCallbacks { get; } = new List<Action>();
+
     public void onRewardedVideoClosed(bool finished)
     {
+        if (finished)
+        {
+            foreach (var item in OnRewardedVideoFinishedCallbacks)
+            {
+                item.Invoke();
+            }
+        }
+        else
+        {
+            foreach (var item in OnRewardedVideoNotFinishedCallbacks)
+            {
+                item.Invoke();
+            }
+        }
+
+        OnRewardedVideoFinishedCallbacks.Clear();
+        OnRewardedVideoNotFinishedCallbacks.Clear();
     }
+
 
     public void onRewardedVideoFailedToLoad()
     {
+
     }
 
     public void onRewardedVideoFinished(int amount, string name)

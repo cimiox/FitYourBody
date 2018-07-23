@@ -2,7 +2,6 @@
 
 public class SportNutritionItem : Item
 {
-    public override event Bought OnBought;
     public float Multiplier { get; set; }
     public float Time { get; set; }
 
@@ -25,11 +24,10 @@ public class SportNutritionItem : Item
     {
         if ((BoostDatabase.Boosts.Count < BoostsHandler.MaxBoosts) && PlayerAttributes.RemoveMoney(cell.Properties.Cost))
         {
-            OnBought?.Invoke(this);
+            Bought();
             return true;
         }
 
-        //TODO: message
         return false;
     }
 }

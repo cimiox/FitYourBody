@@ -1,12 +1,12 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 using UnityEngine;
 
 public class Item
 {
     private int levelNeed;
 
-    public delegate void Bought(Item item);
-    public virtual event Bought OnBought;
+    public event Action<Item> OnBought;
 
     public int ID { get; set; }
     public string Name { get; set; }
@@ -45,5 +45,11 @@ public class Item
         }
         else
             return false;
+    }
+
+
+    public virtual void Bought()
+    {
+        OnBought?.Invoke(this);
     }
 }

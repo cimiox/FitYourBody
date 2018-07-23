@@ -12,15 +12,7 @@ MonoBehaviour:
   m_Name: WheelOfFortunePrizesDB
   m_EditorClassIdentifier: 
   wheelRewards:
-  - rewardType: 0
-    count: 0
-    reward: Plant
-  - rewardType: 1
-    count: 0
-    reward: Ultimate
-  - rewardType: 2
-    count: 0
-    reward: Coin
-  - rewardType: 3
-    count: 0
-    reward: Dollars
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
