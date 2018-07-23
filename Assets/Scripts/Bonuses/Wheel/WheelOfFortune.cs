@@ -1,21 +1,30 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using AppodealAds.Unity.Api;
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class WheelOfFortune : MonoBehaviour
 {
+    private const string GAINER_RESOURCES_PATH = "Shop/GeinerShop";
+    private const string PROTEIN_RESOURCES_PATH = "Shop/ProteinShop";
+
     [SerializeField]
     private WheelOfFortunePrizesDB prizesDB;
 
-    public GameObject[] Prizes { get; private set; }
-
+    [SerializeField]
     private GameObject separator;
-    public GameObject Separator
-    {
-        get { return separator = separator == null ? Resources.Load<GameObject>("WheelOfFortune/Separator") : separator; }
-    }
+
+    [SerializeField]
+    private GameObject wheelPrizePrefab;
+
+    [SerializeField]
+    private Button startWheelButton;
+    [SerializeField]
+    private Button startWheelByAdButton;
 
     [SerializeField]
     private GameObject objectForRotation;
@@ -40,10 +49,16 @@ public class WheelOfFortune : MonoBehaviour
 
     public Quaternion StartPosition { get; set; } = Quaternion.identity;
 
-    private void OnEnable()
+    [SerializeField]
+    private List<Prize> prizesStack;
+
+
+    private IEnumerator Start()
     {
+        yield return new WaitUntil(() => PlayerAttributes.PlayerProperties != null);
         IntializeWheel();
     }
+
 
     private void Update()
     {
@@ -60,28 +75,61 @@ public class WheelOfFortune : MonoBehaviour
         }
     }
 
+
     private void IntializeWheel()
     {
-        for (int i = 0; i < prizesDB.WheelRewards.Count; i++)
+        foreach (var item in prizesStack)
         {
+            switch (item.Type)
+            {
+                case WheelRewardType.Coin:
+                    item.Reward.SetParameters(item.Type, item.Count);
+                    break;
+                case WheelRewardType.Gainer:
+                    var gainerItems = JsonConvert.DeserializeObject<List<SportNutritionItem>>(Resources.Load<TextAsset>(GAINER_RESOURCES_PATH).text);
 
-        }
+                    item.Reward.SetParameters(item.Type, GetItemByLevel(gainerItems, item.Count));
+                    break;
+                case WheelRewardType.Protein:
+                    var proteinItems = JsonConvert.DeserializeObject<List<SportNutritionItem>>(Resources.Load<TextAsset>(PROTEIN_RESOURCES_PATH).text);
 
-        int angle = 360 / Prizes.Length - 1;
-        int count = Prizes.Length / 2;
-
-        for (int i = 1; i < count; i++)
-        {
-            GameObject sprite = Instantiate(Separator, ObjectForRotation.transform);
-            sprite.transform.Rotate(0, 0, angle * i);
+                    item.Reward.SetParameters(item.Type, GetItemByLevel(proteinItems, item.Count));
+                    break;
+            }
         }
     }
+
 
     public void StartWheel()
     {
         WheelState = WheelStates.Rotation;
-        WheelSpeed = Random.Range(0.5f, 2);
+        WheelSpeed = UnityEngine.Random.Range(1.0f, 3.0f);
+        startWheelButton.gameObject.SetActive(false);
     }
+
+
+    public void StartWheelByAd()
+    {
+        if (Appodeal.isLoaded(Appodeal.REWARDED_VIDEO))
+        {
+            startWheelByAdButton.gameObject.SetActive(false);
+            AdsHandler.OnRewardedVideoFinishedCallbacks.Add(StartWheel);
+            AdsHandler.OnRewardedVideoNotFinishedCallbacks.Add(() =>
+            {
+                if (Appodeal.isLoaded(Appodeal.NON_SKIPPABLE_VIDEO))
+                {
+                    startWheelByAdButton.gameObject.SetActive(true);
+                }
+                else
+                {
+                    gameObject.SetActive(false);
+                }
+            });
+
+            Appodeal.show(Appodeal.REWARDED_VIDEO);
+        }
+    }
+
 
     private void RotateWheel()
     {
@@ -89,8 +137,11 @@ public class WheelOfFortune : MonoBehaviour
         ObjectForRotation.transform.Rotate(new Vector3(0, 0, WheelSpeed * DeltaTime));
 
         if (DeltaTime >= RotationTime)
+        {
             WheelState = WheelStates.Stop;
+        }
     }
+
 
     private void StopWheel()
     {
@@ -98,26 +149,111 @@ public class WheelOfFortune : MonoBehaviour
         ObjectForRotation.transform.Rotate(new Vector3(0, 0, WheelSpeed * DeltaTime));
 
         if (DeltaTime <= 0)
-            WheelState = WheelStates.Idle;
-    }
-
-    private void GivePrize()
-    {
-        var prize = Prizes[0];
-
-        for (int i = 0; i < Prizes.Length; i++)
         {
-            for (int j = 0; j < Prizes.Length; j++)
+            WheelState = WheelStates.Idle;
+            GivePrize();
+
+            if (Appodeal.isLoaded(Appodeal.REWARDED_VIDEO))
             {
-                if (Vector3.Distance(Prizes[i].transform.position, Arrow.transform.position)
-                    < Vector3.Distance(Prizes[j].transform.position, Arrow.transform.position))
-                {
-                    prize = Prizes[j];
-                }
+                startWheelByAdButton.gameObject.SetActive(true);
+            }
+            else
+            {
+                StartCoroutine(WaitAndClose());
             }
         }
     }
 
+
+    private IEnumerator WaitAndClose()
+    {
+        yield return new WaitForSeconds(2);
+
+        gameObject.SetActive(false);
+    }
+
+
+    private void GivePrize()
+    {
+        var prize = prizesStack[0];
+
+        for (int i = 0; i < prizesStack.Count; i++)
+        {
+            if (Vector2.Distance(prizesStack[i].Reward.transform.position, Arrow.transform.position)
+                < Vector2.Distance(prize.Reward.transform.position, Arrow.transform.position))
+            {
+                prize = prizesStack[i];
+            }
+        }
+
+        prize.Reward.GetPrize();
+    }
+
+
+    public Item GetItemByLevel(List<SportNutritionItem> items, int level)
+    {
+        items.Sort((x, y) => x.Level.CompareTo(y.Level));
+
+        Item currentItem = null;
+        int currentItemLevel;
+        IEnumerable<Item> itemsByLevel;
+
+        switch (level)
+        {
+            case -1:
+
+                itemsByLevel = items.Where(x => x.Level < PlayerAttributes.PlayerProperties.Level);
+                if (itemsByLevel.Count() > 0)
+                {
+                    currentItemLevel = itemsByLevel.Max(x => x.Level);
+                    currentItem = items.FirstOrDefault(x => x.Level == currentItemLevel);
+                }
+
+                if (currentItem == null)
+                {
+                    currentItem = items.First();
+                }
+
+                return currentItem;
+            case 0:
+                itemsByLevel = items.Where(x => x.Level == PlayerAttributes.PlayerProperties.Level);
+                if (itemsByLevel.Count() > 0)
+                {
+                    currentItemLevel = itemsByLevel.Max(x => x.Level);
+                    currentItem = items.FirstOrDefault(x => x.Level == currentItemLevel);
+                }
+
+                if (currentItem == null)
+                {
+                    if (items.Last().Level < PlayerAttributes.PlayerProperties.Level)
+                    {
+                        currentItem = items.Last();
+                    }
+                    else
+                    {
+                        currentItem = items.Where(x => x.Level >= PlayerAttributes.PlayerProperties.Level).First();
+                    }
+                }
+
+                return currentItem;
+            case 1:
+                itemsByLevel = items.Where(x => x.Level > PlayerAttributes.PlayerProperties.Level);
+                if (itemsByLevel.Count() > 0)
+                {
+                    currentItemLevel = itemsByLevel.Min(x => x.Level);
+                    currentItem = items.FirstOrDefault(x => x.Level == currentItemLevel);
+                }
+
+                if (currentItem == null)
+                {
+                    currentItem = items.Last();
+                }
+
+                return currentItem;
+            default:
+                return items.First();
+        }
+    }
 
     private enum WheelStates
     {
@@ -125,5 +261,32 @@ public class WheelOfFortune : MonoBehaviour
         Stop,
         Idle
     }
-    //TODO Show Prize
+
+    [Serializable]
+    public class Prize
+    {
+        [SerializeField]
+        private WheelRewardType type;
+        public WheelRewardType Type
+        {
+            get { return type; }
+            set { type = value; }
+        }
+
+        [SerializeField]
+        private int count;
+        public int Count
+        {
+            get { return count; }
+            set { count = value; }
+        }
+
+        [SerializeField]
+        private WheelReward reward;
+        public WheelReward Reward
+        {
+            get { return reward; }
+            set { reward = value; }
+        }
+    }
 }

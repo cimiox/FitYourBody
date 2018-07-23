@@ -55,7 +55,7 @@ public abstract class Shop : Window
         cell.Sprite.sprite = item.Sprite;
         cell.name = item.Name;
         cell.Properties = item;
-
+            
         return cell;
     }
 

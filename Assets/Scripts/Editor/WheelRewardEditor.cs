@@ -6,7 +6,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-[CustomPropertyDrawer(typeof(WheelReward))]
+//[CustomPropertyDrawer(typeof(WheelReward))]
 public class WheelRewardEditor : PropertyDrawer
 {
     public WheelRewardType RewardType { get; set; }

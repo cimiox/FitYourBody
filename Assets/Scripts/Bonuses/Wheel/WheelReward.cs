@@ -1,30 +1,85 @@
 ﻿using System;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-[Serializable]
-public class WheelReward
+public class WheelReward : MonoBehaviour
 {
+    private const string WHEEL_SPRITES_PATH = "WheelOfFortune/";
+
     [SerializeField]
-    private WheelRewardType rewardType;
+    private Image rewardImage;
+    [SerializeField]
+    private TextMeshProUGUI countText;
+
     public WheelRewardType RewardType
     {
-        get { return rewardType; }
-        set { rewardType = value; }
+        get;
+        set;
     }
 
-    [SerializeField]
-    private int count;
     public int Count
     {
-        get { return count; }
-        set { count = value; }
+        get;
+        set;
     }
 
-    [SerializeField]
-    private string reward;
-    public string Reward
+    public Item Item
     {
-        get { return reward; }
-        set { reward = value; }
+        get;
+        set;
+    }
+
+    public void SetParameters(WheelRewardType type, Item item)
+    {
+        Item = item;
+        RewardType = type;
+
+        item.OnBought += BoostsHandler.Instance.BoostsHandler_OnBought;
+
+        rewardImage.sprite = item.Sprite;
+        countText.gameObject.SetActive(false);
+    }
+
+
+    private void OnDisable()
+    {
+        if (Item != null)
+        {
+            Item.OnBought -= BoostsHandler.Instance.BoostsHandler_OnBought;
+        }
+    }
+
+
+    public void SetParameters(WheelRewardType type, int count)
+    {
+        Count = count;
+        RewardType = type;
+
+        switch (type)
+        {
+            case WheelRewardType.Coin:
+                rewardImage.sprite = Resources.Load<Sprite>(WHEEL_SPRITES_PATH + "Coin");
+                break;
+        }
+
+        countText.text = count.ToString();
+    }
+
+
+    public void GetPrize()
+    {
+        switch (RewardType)
+        {
+            case WheelRewardType.Coin:
+                PlayerAttributes.PlayerProperties.Money += Count;
+                break;
+            case WheelRewardType.Dollars:
+                break;
+            case WheelRewardType.Gainer:
+            case WheelRewardType.Protein:
+                Item.Bought();
+                break;
+        }
     }
 }
